@@ -122,6 +122,9 @@ regionalWater <- regionalLULC
 regionalWater[regionalWater != 700] <- NA
 regionalWater[is.na(regionalWater)] <- 0
 
+# Individual MRC boundaries within the study area
+regionalMRC_boundary <- st_intersection(regionalMRC, regionalMRC_extent)
+
 
 # Local scale analysis ---------------------------
 
@@ -222,12 +225,14 @@ regionalPA_combined <- regionalPA_buffered %>%
 # Calculate area of each polygon
 regionalPA_combined$area <- as.vector(st_area(regionalPA_combined))
 
+# Add unique ID to each PA
+regionalPA_combined$PAid <- c(1:dim(regionalPA_combined)[1])
+
 # Filter out small PA
 targetRegionalPA <- regionalPA_combined %>%
-  filter(area >= 1250*10000)   # 750 hectares
+  filter(area >= 1250*10000)   # 1250 hectares
 
-# Add unique ID to each PA
-targetRegionalPA$PAid <- c(1:dim(targetRegionalPA)[1])
+
 
 
 # Local ------------------------------------------
@@ -357,6 +362,12 @@ localResURAM_scaled1000 <- (localResURAM*1000)/32
 
 # Study area extent
 # Regional
+st_write(obj = regionalMRC_boundary,
+         dsn = file.path(intermediatesDir),
+         layer = "regionalMRCinStudyArea",
+         factorsAsCharacter = FALSE,
+         overwrite = TRUE,
+         driver = "ESRI Shapefile")
 st_write(obj = regionalMRC_extent,
          dsn = file.path(intermediatesDir),
          layer = "regionalStudyArea",
@@ -373,6 +384,14 @@ st_write(obj = localMRC_buffered,
 
 # PA sources
 # Regional
+# All terrestrial
+st_write(obj = regionalPA_combined[,-2], # Remove area attribute
+         dsn = file.path(intermediatesDir, "Linkage Mapper"),
+         layer = "regionalPAsources_all",
+         factorsAsCharacter = FALSE,
+         overwrite = TRUE,
+         driver = "ESRI Shapefile")
+# Filtered
 st_write(obj = targetRegionalPA[,-2], # Remove area attribute
          dsn = file.path(intermediatesDir, "Linkage Mapper"),
          layer = "regionalPAsources",
@@ -429,12 +448,5 @@ writeRaster(localResRASY_scaled1000,
 writeRaster(localResURAM_scaled1000, 
             file.path(intermediatesDir, "Linkage Mapper", "localResURAM1000.tif"), 
             overwrite = TRUE, datatype = "INT2S", NAflag = -9999)
-
-
-
-
-# Regional ---------------------------------------
-
-
 
 
