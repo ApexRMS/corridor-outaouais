@@ -2,7 +2,12 @@
 ## Carina Rauen Firkowski 
 ## March 26, 2024
 ##
-## This script ...
+## This script prepares the following inputs for the corridor delimitation
+## analyses, at the local and regional scales:
+##    - Analysis area
+##    - Resistance raster
+##    - Sources
+
 
 
 # Set working directory
@@ -237,9 +242,123 @@ targetRegionalPA <- regionalPA_combined %>%
 
 # Local ------------------------------------------
 
+# With aquatic PA -------------
+
 # Filter PA within local study area and merge boundaries
 localPA <- PA %>%
   st_intersection(localMRC_buffered) %>%
+  st_union() %>%
+  st_as_sf() %>%
+  st_cast("POLYGON") %>%
+  st_set_geometry("geometry")
+
+# Create raster
+localPAraster <- rasterize(localPA, localTemplate)
+localPAraster[is.na(localPAraster)] <- 0
+
+# Create copy of PA raster to filter
+localPAonLand <- localPAonWater <- localPAraster
+
+# Combine PA and water
+localPAandWater <- localPAraster + localWater
+
+# Remove aquatic protected areas from terrestrial set
+localPAonLand[localPAandWater == 701] <- NA
+# Remove terrestrial protected areas from aquatic set
+localPAonWater[localPAandWater != 701] <- NA
+
+# Set NA values
+localPAonLand[localPAonLand == 0] <- NA
+
+# Detect patches
+localPAonLand_patches <- patches(localPAonLand)
+localPAonWater_patches <- patches(localPAonWater)
+localPAonLand_patchesFreq <- freq(localPAonLand_patches)
+localPAonWater_patchesFreq <- freq(localPAonWater_patches)
+
+# Filter small patches to remove artifacts
+localPAonLand_patchesFreq <- localPAonLand_patchesFreq[localPAonLand_patchesFreq$count < 100,]
+localPAonLand[which.lyr(localPAonLand_patches %in% localPAonLand_patchesFreq$value)] <- NA
+localPAonWater_patchesFreq <- localPAonWater_patchesFreq[localPAonWater_patchesFreq$count < 100,]
+localPAonWater[which.lyr(localPAonWater_patches %in% localPAonWater_patchesFreq$value)] <- NA
+
+# Transform back into polygons, fill holes and merge overlapping shapes 
+localPAonLand_polygon <- localPAonLand %>%
+  as.polygons(values = FALSE) %>%
+  st_as_sf() %>%
+  st_cast("POLYGON") %>%
+  smoothr::fill_holes(threshold = Inf) %>%
+  st_union() %>%
+  st_as_sf() %>%
+  st_cast("POLYGON") %>%
+  st_set_geometry("geometry")
+localPAonWater_polygon <- localPAonWater %>%
+  as.polygons(values = FALSE) %>%
+  st_as_sf() %>%
+  st_cast("POLYGON") %>%
+  smoothr::fill_holes(threshold = Inf) %>%
+  st_union() %>%
+  st_as_sf() %>%
+  st_cast("POLYGON") %>%
+  st_set_geometry("geometry")
+
+# Set threshold distance to combine PA
+distThreshold <- 400      # 0.5 km
+
+# Calculate buffer around PA and union polygons
+localPAonLand_buffered <- localPAonLand_polygon %>%
+  st_buffer(dist = distThreshold) %>%
+  summarise(geometry = st_union(geometry)) %>%
+  st_cast("POLYGON") %>%
+  smoothr::fill_holes(threshold = Inf)
+localPAonWater_buffered <- localPAonWater_polygon %>%
+  st_buffer(dist = distThreshold) %>%
+  summarise(geometry = st_union(geometry)) %>%
+  st_cast("POLYGON") %>%
+  smoothr::fill_holes(threshold = Inf)
+
+# Revert boundaries to exclude buffer
+localPAonLand_combined <- localPAonLand_buffered %>%
+  st_buffer(dist = -distThreshold) %>%
+  st_cast("MULTIPOLYGON") %>%
+  st_cast("POLYGON")
+localPAonWater_combined <- localPAonWater_buffered %>%
+  st_buffer(dist = -distThreshold) %>%
+  st_cast("MULTIPOLYGON") %>%
+  st_cast("POLYGON")
+
+# Combine terrestrial and aquatic PA
+localPA_union <- st_union(localPAonLand_combined, localPAonWater_combined)
+
+# Merge boundaries
+localPA_all <- localPA_union %>%
+  st_union() %>%
+  st_as_sf() %>%
+  st_cast("POLYGON") %>%
+  st_set_geometry("geometry") %>%
+  smoothr::fill_holes(threshold = Inf)
+
+# Calculate area of each polygon
+localPA_all$area <- as.vector(st_area(localPA_all))
+
+# Add unique ID to each PA
+localPA_all$PAid <- c(1:dim(localPA_all)[1])
+
+
+
+# Without aquatic PA ----------
+
+# Filter PA within local study area and merge boundaries
+localPA <- PA %>%
+  st_intersection(localMRC_buffered) %>%
+  st_union() %>%
+  st_as_sf() %>%
+  st_cast("POLYGON") %>%
+  st_set_geometry("geometry")
+
+# Transform back into polygons, fill holes and merge overlapping shapes 
+localPAwithWater <- localPA %>%
+  smoothr::fill_holes(threshold = Inf) %>%
   st_union() %>%
   st_as_sf() %>%
   st_cast("POLYGON") %>%
@@ -302,7 +421,6 @@ localPA_combined$PAid <- c(1:dim(localPA_combined)[1])
 # Filter out small PA
 targetLocalPA <- localPA_combined %>%
   filter(area >= 750*10000)   # 750 hectares
-
 
 
 
@@ -387,29 +505,36 @@ st_write(obj = localMRC_buffered,
 # All terrestrial
 st_write(obj = regionalPA_combined[,-2], # Remove area attribute
          dsn = file.path(intermediatesDir, "Linkage Mapper"),
-         layer = "regionalPAsources_all",
+         layer = "regionalPAsources_allterr",
          factorsAsCharacter = FALSE,
          overwrite = TRUE,
          driver = "ESRI Shapefile")
 # Filtered
 st_write(obj = targetRegionalPA[,-2], # Remove area attribute
          dsn = file.path(intermediatesDir, "Linkage Mapper"),
-         layer = "regionalPAsources",
+         layer = "regionalPAsources_largeterr",
          factorsAsCharacter = FALSE,
          overwrite = TRUE,
          driver = "ESRI Shapefile")
 # Local
+# All terrestrial and aquatic
+st_write(obj = localPA_all[,-2], # Remove area attribute
+         dsn = file.path(intermediatesDir, "Linkage Mapper"),
+         layer = "localPAsources_aquaterr",
+         factorsAsCharacter = FALSE,
+         overwrite = TRUE,
+         driver = "ESRI Shapefile")
 # All terrestrial
 st_write(obj = localPA_combined[,-2], # Remove area attribute
          dsn = file.path(intermediatesDir, "Linkage Mapper"),
-         layer = "localPAsources_all",
+         layer = "localPAsources_allterr",
          factorsAsCharacter = FALSE,
          overwrite = TRUE,
          driver = "ESRI Shapefile")
 # Filtered
 st_write(obj = targetLocalPA[,-2], # Remove area attribute
          dsn = file.path(intermediatesDir, "Linkage Mapper"),
-         layer = "localPAsources",
+         layer = "localPAsources_largeterr",
          factorsAsCharacter = FALSE,
          overwrite = TRUE,
          driver = "ESRI Shapefile")
