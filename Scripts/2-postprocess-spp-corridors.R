@@ -1,0 +1,181 @@
+## a312
+## Carina Rauen Firkowski 
+## April 8, 2024
+##
+## This script loads the species-specific corridors from Linkage Mapper and 
+## combines results into a single map per spatial scale.
+
+
+
+# Set working directory
+setwd("C:/gitprojects/a312")
+
+# Load constants
+source("Scripts/0-constants.R")
+
+
+
+# Load spatial data ------------------------------------------------------------
+
+# Local corridors
+BLBRlocal <- rast(file.path(outputDir,
+                            "BLBRlocal_AquaTerr.tif"))
+MAAMlocal <- rast(file.path(outputDir,
+                            "MAAMlocal_AquaTerr.tif"))
+PLCIlocal <- rast(file.path(outputDir,
+                            "PCLIlocal_AquaTerr.tif"))
+RASYlocal <- rast(file.path(outputDir,
+                            "RASYlocalAquaTerr.tif"))
+URAMlocal <- rast(file.path(outputDir,
+                            "URAMlocal_AquaTerr.tif"))
+
+# Regional corridors
+BLBRregional <- rast(file.path(outputDir,
+                            "BLBRregional.tif"))
+MAAMregional <- rast(file.path(outputDir,
+                            "MAAMregional1000.tif"))
+PLCIregional <- rast(file.path(outputDir,
+                            "PLCIregional.tif"))
+RASYregional <- rast(file.path(outputDir,
+                            "RASYregional.tif"))
+URAMregional <- rast(file.path(outputDir,
+                            "URAMregional1000.tif"))
+
+
+# Combine corridors (continuous) -----------------------------------------------
+
+# Re-scale corridor
+# Local
+BLBRlocal_scaled <- BLBRlocal/25000
+MAAMlocal_scaled <- MAAMlocal/75000
+PLCIlocal_scaled <- PLCIlocal/25000
+RASYlocal_scaled <- RASYlocal/25000
+URAMlocal_scaled <- URAMlocal/75000
+# Regional
+BLBRregional_scaled <- BLBRregional/25000
+MAAMregional_scaled <- MAAMregional/75000
+PLCIregional_scaled <- PLCIregional/25000
+RASYregional_scaled <- RASYregional/25000
+URAMregional_scaled <- URAMregional/75000
+
+# Invert scale 
+# NOTE: 1 to represent closest to least-cost path and 
+#       0 to represent furthest distance from least-cost path
+# Local
+BLBRlocal_inverted <- 0 - BLBRlocal_scaled + 1
+MAAMlocal_inverted <- 0 - MAAMlocal_scaled + 1
+PLCIlocal_inverted <- 0 - PLCIlocal_scaled + 1
+RASYlocal_inverted <- 0 - RASYlocal_scaled + 1
+URAMlocal_inverted <- 0 - URAMlocal_scaled + 1
+# Regional
+BLBRregional_inverted <- 0 - BLBRregional_scaled + 1
+MAAMregional_inverted <- 0 - MAAMregional_scaled + 1
+PLCIregional_inverted <- 0 - PLCIregional_scaled + 1
+RASYregional_inverted <- 0 - RASYregional_scaled + 1
+URAMregional_inverted <- 0 - URAMregional_scaled + 1
+
+# Set NA values to 0
+# Local
+BLBRlocal_inverted[is.na(BLBRlocal_inverted)] <- 0
+MAAMlocal_inverted[is.na(MAAMlocal_inverted)] <- 0
+PLCIlocal_inverted[is.na(PLCIlocal_inverted)] <- 0
+RASYlocal_inverted[is.na(RASYlocal_inverted)] <- 0
+URAMlocal_inverted[is.na(URAMlocal_inverted)] <- 0
+# Regional
+BLBRregional_inverted[is.na(BLBRregional_inverted)] <- 0
+MAAMregional_inverted[is.na(MAAMregional_inverted)] <- 0
+PLCIregional_inverted[is.na(PLCIregional_inverted)] <- 0
+RASYregional_inverted[is.na(RASYregional_inverted)] <- 0
+URAMregional_inverted[is.na(URAMregional_inverted)] <- 0
+
+# Sum corridors
+localSum_inverted <- sum(c(BLBRlocal_inverted,
+                           MAAMlocal_inverted,
+                           PLCIlocal_inverted,
+                           RASYlocal_inverted,
+                           URAMlocal_inverted))
+regionalSum_inverted <- sum(c(BLBRregional_inverted,
+                              MAAMregional_inverted,
+                              PLCIregional_inverted,
+                              RASYregional_inverted,
+                              URAMregional_inverted))
+
+# Set 0 to NA
+localSum_inverted[localSum_inverted == 0] <- NA
+regionalSum_inverted[regionalSum_inverted == 0] <- NA
+
+
+
+# Combine corridors (binary) ---------------------------------------------------
+
+# BLBR
+BLBRlocal_binary <- BLBRlocal
+BLBRlocal_binary[!is.na(BLBRlocal_binary)] <- 1
+BLBRlocal_binary[is.na(BLBRlocal_binary)] <- 0
+BLBRregional_binary <- BLBRregional
+BLBRregional_binary[!is.na(BLBRregional_binary)] <- 1
+BLBRregional_binary[is.na(BLBRregional_binary)] <- 0
+# MAAM
+MAAMlocal_binary <- MAAMlocal
+MAAMlocal_binary[!is.na(MAAMlocal_binary)] <- 1
+MAAMlocal_binary[is.na(MAAMlocal_binary)] <- 0
+MAAMregional_binary <- MAAMregional
+MAAMregional_binary[!is.na(MAAMregional_binary)] <- 1
+MAAMregional_binary[is.na(MAAMregional_binary)] <- 0
+# PLCI
+PLCIlocal_binary <- PLCIlocal
+PLCIlocal_binary[!is.na(PLCIlocal_binary)] <- 1
+PLCIlocal_binary[is.na(PLCIlocal_binary)] <- 0
+PLCIregional_binary <- PLCIregional
+PLCIregional_binary[!is.na(PLCIregional_binary)] <- 1
+PLCIregional_binary[is.na(PLCIregional_binary)] <- 0
+# RASY
+RASYlocal_binary <- RASYlocal
+RASYlocal_binary[!is.na(RASYlocal_binary)] <- 1
+RASYlocal_binary[is.na(RASYlocal_binary)] <- 0
+RASYregional_binary <- RASYregional
+RASYregional_binary[!is.na(RASYregional_binary)] <- 1
+RASYregional_binary[is.na(RASYregional_binary)] <- 0
+# URAM
+URAMlocal_binary <- URAMlocal
+URAMlocal_binary[!is.na(URAMlocal_binary)] <- 1
+URAMlocal_binary[is.na(URAMlocal_binary)] <- 0
+URAMregional_binary <- URAMregional
+URAMregional_binary[!is.na(URAMregional_binary)] <- 1
+URAMregional_binary[is.na(URAMregional_binary)] <- 0
+
+# Sum corridors
+localSum_binary <- sum(c(BLBRlocal_binary,
+                         MAAMlocal_binary,
+                         PLCIlocal_binary,
+                         RASYlocal_binary,
+                         URAMlocal_binary))
+regionalSum_binary <- sum(c(BLBRregional_binary,
+                            MAAMregional_binary,
+                            PLCIregional_binary,
+                            RASYregional_binary,
+                            URAMregional_binary))
+
+# Set 0 to NA
+localSum_binary[localSum_binary == 0] <- NA
+regionalSum_binary[regionalSum_binary == 0] <- NA
+
+
+
+# Write to file ----------------------------------------------------------------
+
+writeRaster(localSum_inverted, 
+            file.path(outputDir, "localSum_inverted.tif"), 
+            overwrite = TRUE, datatype = "FLT8S", NAflag = -9999)
+writeRaster(regionalSum_inverted, 
+            file.path(outputDir, "regionalSum_inverted.tif"), 
+            overwrite = TRUE, datatype = "FLT8S", NAflag = -9999)
+
+writeRaster(localSum_binary, 
+            file.path(outputDir, "localSum_binary.tif"), 
+            overwrite = TRUE, datatype = "FLT8S", NAflag = -9999)
+writeRaster(regionalSum_binary, 
+            file.path(outputDir, "regionalSum_binary.tif"), 
+            overwrite = TRUE, datatype = "FLT8S", NAflag = -9999)
+
+
