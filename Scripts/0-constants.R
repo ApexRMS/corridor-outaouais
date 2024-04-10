@@ -22,7 +22,7 @@ library(tidyverse)
 rootDir <- "."
 dataDir <- file.path(rootDir, "Data")
 intermediatesDir <- file.path(rootDir, "Intermediates")
-outputDir <- file.path(rootDir, "Outputs")
+outputDir <- file.path(rootDir, "Output")
 
 # Composite directories
 tabularDataDir <- file.path(dataDir, "Tabular")
