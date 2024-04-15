@@ -480,6 +480,12 @@ localResURAM_scaled1000 <- (localResURAM*1000)/32
 
 # Study area extent
 # Regional
+st_write(obj = regionalMRC_buffered,
+         dsn = file.path(intermediatesDir),
+         layer = "regionalFullStudyArea",
+         factorsAsCharacter = FALSE,
+         overwrite = TRUE,
+         driver = "ESRI Shapefile")
 st_write(obj = regionalMRC_boundary,
          dsn = file.path(intermediatesDir),
          layer = "regionalMRCinStudyArea",
