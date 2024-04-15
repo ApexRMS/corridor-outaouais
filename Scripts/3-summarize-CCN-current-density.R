@@ -429,7 +429,7 @@ URAM_summaryPerCorridor <- corridor_significance(URAM_summaryNonCorridor,
 
 
 
-# Plot -------------------------------------------------------------------------
+# Plot current density per corridor and per species ----------------------------
 
 # Function to detect outlier values
 calculate_outliers = function(x) {
@@ -456,6 +456,25 @@ PLCI_outliers <- detect_outliers(PLCI_valuesPerCorridor)
 RASY_outliers <- detect_outliers(RASY_valuesPerCorridor)
 URAM_outliers <- detect_outliers(URAM_valuesPerCorridor)
 
+# Merge outlier values with corridor names
+BLBR_outlierAndName <- merge(BLBR_outliers, corridorName, by = "ID")
+BLBR_outlierAndName$Species <- "BLBR"
+MAAM_outlierAndName <- merge(MAAM_outliers, corridorName, by = "ID")
+MAAM_outlierAndName$Species <- "MAAM"
+PLCI_outlierAndName <- merge(PLCI_outliers, corridorName, by = "ID")
+PLCI_outlierAndName$Species <- "PLCI"
+RASY_outlierAndName <- merge(RASY_outliers, corridorName, by = "ID")
+RASY_outlierAndName$Species <- "RASY"
+URAM_outlierAndName <- merge(URAM_outliers, corridorName, by = "ID")
+URAM_outlierAndName$Species <- "URAM"
+
+# Combine results across species
+outlierAndName <- rbind(BLBR_outlierAndName, 
+                        MAAM_outlierAndName,
+                        PLCI_outlierAndName,
+                        RASY_outlierAndName,
+                        URAM_outlierAndName)
+
 # Function to plot result
 plot_perCorridor = function(valuesPerCorridor, summaryPerCorridor, outliers,
                             corridorNameDF = corridorName){
@@ -468,9 +487,6 @@ plot_perCorridor = function(valuesPerCorridor, summaryPerCorridor, outliers,
   valuesPerCorridor_name <- merge(valuesPerCorridor_sign, 
                                   corridorName, 
                                   by = "ID")
-  
-  # Merge values per corridor with corridor names
-  outliers_name <- merge(outliers, corridorName, by = "ID")
   
   # Color match for current density significance
   colorDictionary <- data.frame(Significance = c("+", "-", NA),
@@ -495,7 +511,7 @@ plot_perCorridor = function(valuesPerCorridor, summaryPerCorridor, outliers,
     labs(y = "Densité de courant", x = "Corridor") +
     geom_boxplot(aes(fill = as.factor(Name)), 
                  outlier.color = NA, show.legend = F) + 
-    geom_point(data = outliers_name[outliers_name$outlier,], 
+    geom_point(data = outliers[outliers$outlier,], 
                aes(color = as.factor(Name)),
                alpha = 0.5, show.legend = F) +
     scale_colour_manual(values = significancePalette) +
@@ -509,22 +525,122 @@ plot_perCorridor = function(valuesPerCorridor, summaryPerCorridor, outliers,
 BLBR_perCorridorPlot <- plot_perCorridor(
   valuesPerCorridor = BLBR_valuesPerCorridor,
   summaryPerCorridor = BLBR_summaryPerCorridor,
-  outliers = BLBR_outliers)
+  outliers = BLBR_outlierAndName)
 MAAM_perCorridorPlot <- plot_perCorridor(
   valuesPerCorridor = MAAM_valuesPerCorridor,
   summaryPerCorridor = MAAM_summaryPerCorridor,
-  outliers = MAAM_outliers)
+  outliers = MAAM_outlierAndName)
 PLCI_perCorridorPlot <- plot_perCorridor(
   valuesPerCorridor = PLCI_valuesPerCorridor,
   summaryPerCorridor = PLCI_summaryPerCorridor,
-  outliers = PLCI_outliers)
+  outliers = PLCI_outlierAndName)
 RASY_perCorridorPlot <- plot_perCorridor(
   valuesPerCorridor = RASY_valuesPerCorridor,
   summaryPerCorridor = RASY_summaryPerCorridor,
-  outliers = RASY_outliers)
+  outliers = RASY_outlierAndName)
 URAM_perCorridorPlot <- plot_perCorridor(
   valuesPerCorridor = URAM_valuesPerCorridor,
   summaryPerCorridor = URAM_summaryPerCorridor,
-  outliers = URAM_outliers)
+  outliers = URAM_outlierAndName)
 
 
+
+# Single plot current density per corridor across species ----------------------
+
+# Function to merge values per corridor with corridor names
+merge_valuesAndName = function(valuesPerCorridor, summaryPerCorridor,
+                               corridorNameDF = corridorName){
+  
+  # Merge values per corridor with corridor significance
+  valuesPerCorridor_sign <- merge(valuesPerCorridor,
+                                  summaryPerCorridor[,c("ID", "Significance")],
+                                  by = "ID")
+  # Merge values per corridor with corridor names
+  valuesPerCorridor_name <- merge(valuesPerCorridor_sign, 
+                                  corridorName, 
+                                  by = "ID")
+  
+  return(valuesPerCorridor_name)
+}
+
+BLBR_valuesAndName <- merge_valuesAndName(
+  valuesPerCorridor = BLBR_valuesPerCorridor,
+  summaryPerCorridor = BLBR_summaryPerCorridor)
+BLBR_valuesAndName$Species <- "BLBR"
+MAAM_valuesAndName <- merge_valuesAndName(
+  valuesPerCorridor = MAAM_valuesPerCorridor,
+  summaryPerCorridor = MAAM_summaryPerCorridor)
+MAAM_valuesAndName$Species <- "MAAM"
+PLCI_valuesAndName <- merge_valuesAndName(
+  valuesPerCorridor = PLCI_valuesPerCorridor,
+  summaryPerCorridor = PLCI_summaryPerCorridor)
+PLCI_valuesAndName$Species <- "PLCI"
+RASY_valuesAndName <- merge_valuesAndName(
+  valuesPerCorridor = RASY_valuesPerCorridor,
+  summaryPerCorridor = RASY_summaryPerCorridor)
+RASY_valuesAndName$Species <- "RASY"
+URAM_valuesAndName <- merge_valuesAndName(
+  valuesPerCorridor = URAM_valuesPerCorridor,
+  summaryPerCorridor = URAM_summaryPerCorridor)
+URAM_valuesAndName$Species <- "URAM"
+
+# Combine results across species
+valuesAndName <- rbind(BLBR_valuesAndName, 
+                       MAAM_valuesAndName,
+                       PLCI_valuesAndName,
+                       RASY_valuesAndName,
+                       URAM_valuesAndName)
+
+# Function to merge summary per corridor with color dictionary and corridor name
+create_signPalette = function(summaryPerCorridor, 
+                              corridorNameDF = corridorName){
+  
+  # Color match for current density significance
+  colorDictionary <- data.frame(Significance = c("+", "-", NA),
+                                ColourCode = c("palegreen", "#F8766D", "grey"))
+  
+  # Merge summary per corridor with colour dictionary
+  summaryPerCorridor_color <- summaryPerCorridor %>%
+    merge(colorDictionary, by = "Significance") %>%
+    merge(corridorNameDF, by = "ID") %>%
+    arrange(AlphabeticalOrder)
+  
+  # Set alphabetical order & palette 
+  significancePalette <- summaryPerCorridor_color$ColourCode
+  
+  return(significancePalette)
+}
+
+BLBR_signPalette <- create_signPalette(BLBR_summaryPerCorridor)
+MAAM_signPalette <- create_signPalette(MAAM_summaryPerCorridor)
+PLCI_signPalette <- create_signPalette(PLCI_summaryPerCorridor)
+RASY_signPalette <- create_signPalette(RASY_summaryPerCorridor)
+URAM_signPalette <- create_signPalette(URAM_summaryPerCorridor)
+
+# Combine results across species
+signPalette <- c(BLBR_signPalette, 
+                 MAAM_signPalette,
+                 PLCI_signPalette,
+                 RASY_signPalette,
+                 URAM_signPalette)
+
+# Set corridor order & levels
+corridorName <- corridorName %>%
+  arrange(CorridorOrder)
+levelOrder <- corridorNameDF$Name
+
+# Plot current density per corridor with colour-coded significance 
+ggplot(valuesAndName, 
+       aes(x = factor(Name,  level = levelOrder), 
+           y = Value)) +
+  labs(y = "Densité de courant", x = "Corridor") +
+  geom_boxplot(aes(fill = interaction(Name, Species)), 
+               outlier.color = NA, show.legend = F) + 
+  geom_point(data = outlierAndName[outlierAndName$outlier,], 
+             aes(color = interaction(Name, Species)),
+             alpha = 0.5, position=position_jitterdodge(jitter.width=0), 
+             show.legend = F) +
+  scale_colour_manual(values = signPalette) +
+  scale_fill_manual(values = signPalette) +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, hjust=1))
