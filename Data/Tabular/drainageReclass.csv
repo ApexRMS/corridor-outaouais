@@ -1,0 +1,33 @@
+CL_DRAI,NOM_OFF,CODE
+0,Excessif,0
+10,Rapide avec aucun modificateur,1
+11,Rapide avec drainage latéral,1
+12,Rapide avec horizon gelé,1
+13,Rapide avec amélioration d'origine anthropique,1
+14,Rapide avec ralentissement d'origine anthropique,1
+16,Complexe,1
+20,Bon avec avec aucun modificateur,2
+21,Bon avec drainage latéral,2
+22,Bon avec horizon gelé,2
+23,Bon avec amélioration d'origine anthropique,2
+24,Bon avec ralentissement d'origine anthropique,2
+30,Modéré avec aucun modificateur,3
+31,Modéré avec drainage latéral,3
+32,Modéré avec horizon gelé,3
+33,Modéré avec amélioration d'origine anthropique,3
+34,Modéré avec ralentissement d'origine anthropique,3
+40,Imparfait avec aucun modificateur,4
+41,Imparfait avec drainage latéral,4
+42,Imparfait avec horizon gelé,4
+43,Imparfait avec amélioration d'origine anthropique,4
+44,Imparfait avec ralentissement d'origine anthropique,4
+50,Mauvais avec aucun modificateur,5
+51,Mauvais avec drainage latéral,5
+52,Mauvais avec horizon gelé,5
+53,Mauvais avec amélioration d'origine anthropique,5
+54,Mauvais avec ralentissement d'origine anthropique,5
+60,Très mauvais avec aucun modificateur,6
+61,Très mauvais avec drainage latéral,6
+62,Très mauvais avec horizon gelé,6
+63,Très mauvais avec amélioration d'origine anthropique,6
+64,Très mauvais avec ralentissement d'origine anthropique,6

@@ -1,0 +1,445 @@
+Code,Classification détaillée,Classification selon 8 catégories,Classification A selon 27 catégories,Classification B selon 20 catégories,Recode
+120,Agriculture indifférenciée,Agricole,Agriculture indifférenciée,Agriculture indifférenciée,7
+131,Jachère,Agricole,Agriculture indifférenciée,Agriculture indifférenciée,7
+198,Vesce,Agricole,Agriculture indifférenciée,Agriculture indifférenciée,7
+2120,Agriculture (indifférenciée)\Tourbière,Agricole,Agriculture indifférenciée,Agriculture indifférenciée,7
+4120,Agriculture (indifférenciée)\Marécage,Agricole,Agriculture indifférenciée,Agriculture indifférenciée,7
+300,Autres terrains,Anthropique,Anthropique,Anthropique,1
+301,Zones développées,Anthropique,Anthropique,Anthropique,1
+302,Urbain,Anthropique,Anthropique,Anthropique,1
+311,Parc/terrain sport,Anthropique,Anthropique,Anthropique,1
+313,Golf,Anthropique,Anthropique,Anthropique,1
+320,Routes et chemins,Anthropique,Anthropique,Anthropique,1
+321,Aéroport,Anthropique,Anthropique,Anthropique,1
+322,Chemin de fer,Anthropique,Anthropique,Anthropique,1
+341,Carrière et gravière,Anthropique,Anthropique,Anthropique,1
+343,Mine et déchet de mine,Anthropique,Anthropique,Anthropique,1
+344,"Bassin de filtration, de
+décontamination, Bassin
+déchets liquides, etc.",Anthropique,Anthropique,Anthropique,1
+345,Dépotoir,Anthropique,Anthropique,Anthropique,1
+346,Zone industrielle et commerce,Anthropique,Anthropique,Anthropique,1
+350,Installations de gaz et pétrole,Anthropique,Anthropique,Anthropique,1
+351,"Ligne de transmission, Ligne de transport d'énergie",Anthropique,Anthropique,Anthropique,1
+2301,Urbain\Tourbière,Anthropique,Anthropique,Anthropique,1
+2351,"Ligne de transport
+d'énergie\Tourbière",Anthropique,Anthropique,Anthropique,1
+3000,Tourbière exploitée,Anthropique,Anthropique,Anthropique,1
+4301,Urbain\Marécage,Anthropique,Anthropique,Anthropique,1
+4351,"Ligne de transport
+d'énergie\Marécage",Anthropique,Anthropique,Anthropique,1
+50,Arbustes,Forestier,Arbustaies,Arbustaies,11
+51,Arbustes bas,Forestier,Arbustaies,Arbustaies,11
+53,Arbustes hauts,Forestier,Arbustaies,Arbustaies,11
+61,Lande à mousse,"Sols nus et
+landes",Lande à mousse,Autres,19
+60,Lichenais,"Sols nus et
+landes",Lichenais,Autres,19
+30,"Sol nus /roc-sol à nu, Dénudé et semi-dénudé sec","Sols nus et
+landes",Sol dénudé,Autres,19
+4030,"Dénudé et semi-dénudé
+sec\Marécage","Sols nus et
+landes",Sol dénudé,Autres,19
+29,Neige et glace permanentes/ combe à neige,Non classifié,"Neige et glace
+permanentes/ combe à neige",Autres,0
+179,Autres cultures,Agricole,Autres cultures,Autres cultures,10
+180,Fruits,Agricole,Autres cultures,Autres cultures,10
+181,Baies/Bleuetière,Agricole,Autres cultures,Autres cultures,10
+182,Canneberges,Agricole,Autres cultures,Autres cultures,10
+188,Vergers / Vignobles,Agricole,Autres cultures,Autres cultures,10
+190,Raisins,Agricole,Autres cultures,Autres cultures,10
+193,Fines Herbes,Agricole,Autres cultures,Autres cultures,10
+194,Pépinière,Agricole,Autres cultures,Autres cultures,10
+197,Chanvre,Agricole,Autres cultures,Autres cultures,10
+250,Opérations forestières,"Coupes et
+régénérations","Coupes et
+régénérations","Coupes et
+régénérations",22
+253,Coupe forestière,"Coupes et
+régénérations","Coupes et
+égénérations","Coupes et
+régénérations",22
+255,Plantation,"Coupes et
+régénérations","Coupes et
+régénérations","Coupes et
+régénérations",22
+263,Brulis,"Coupes et
+régénérations","Coupes et
+régénérations","Coupes et
+régénérations",22
+280,Perturbation naturelle,"Coupes et
+régénérations","Coupes et
+régénérations","Coupes et
+régénérations",22
+24,Cours d'eau,Aquatique,Cours d'eau,Cours d'eau,9
+20,Eau,Aquatique,Eau,Eau,9
+25,Eau salée,Aquatique,Eau,Eau,9
+26,Eau saumâtre,Aquatique,Eau,Eau,9
+200,Forêt (indifférenciée),Forestier,Forêt indifférenciée,Forêt,16
+230,Forêt mixte,Forestier,Forêt mixte,Forêt,16
+231,Forêt mixte dense,Forestier,Forêt mixte,Forêt,16
+233,Forêt mixte éparse,Forestier,Forêt mixte,Forêt,16
+235,Forêt mixte ouverte,Forestier,Forêt mixte,Forêt,16
+210,Forêt de conifères,Forestier,Forêt de conifères,Forêt,17
+211,Forêt de conifères dense,Forestier,Forêt de conifères,Forêt,17
+213,Forêt de conifères éparse,Forestier,Forêt de conifères,Forêt,17
+215,Forêt de conifères ouverte,Forestier,Forêt de conifères,Forêt,17
+220,Forêt de feuillus,Forestier,Forêt de feuillus,Forêt,15
+221,Forêt de feuillus dense,Forestier,Forêt de feuillus,Forêt,15
+223,Forêt de feuillus éparse,Forestier,Forêt de feuillus,Forêt,15
+225,Forêt de feuillus ouverte,Forestier,Forêt de feuillus,Forêt,15
+110,Prairies,Agricole,Fourrage,Fourrage,3
+122,Cultures pérennes et pâturages,Agricole,Fourrage,Fourrage,3
+55,Friche,Agricole,Friche,Friche,11
+147,Maïs,Agricole,Grand interligne,Grand interligne,3
+150,Oléagineux,Agricole,Grand interligne,Grand interligne,3
+151,Bourrache,Agricole,Grand interligne,Grand interligne,3
+157,Tournesols,Agricole,Grand interligne,Grand interligne,3
+158,Soja,Agricole,Grand interligne,Grand interligne,3
+160,Légume à Gousse,Agricole,Grand interligne,Grand interligne,3
+162,Pois,Agricole,Grand interligne,Grand interligne,3
+167,Fèves,Agricole,Grand interligne,Grand interligne,3
+168,Laitue,Agricole,Grand interligne,Grand interligne,3
+169,Oignons,Agricole,Grand interligne,Grand interligne,3
+170,Carottes,Agricole,Grand interligne,Grand interligne,3
+171,Cucurbitacées,Agricole,Grand interligne,Grand interligne,3
+174,Lentilles,Agricole,Grand interligne,Grand interligne,3
+172,Crucifères,Agricole,Grand interligne,Grand interligne,3
+173,Légumes à fruits,Agricole,Grand interligne,Grand interligne,3
+175,Légumes,Agricole,Grand interligne,Grand interligne,3
+176,Légumes racines,Agricole,Grand interligne,Grand interligne,3
+177,Pommes de terre,Agricole,Grand interligne,Grand interligne,3
+178,Betteraves à sucre,Agricole,Grand interligne,Grand interligne,3
+191,Houblon,Agricole,Grand interligne,Grand interligne,3
+132,Céréales,Agricole,Interligne étroit,Interligne étroit,3
+133,Orge,Agricole,Interligne étroit,Interligne étroit,3
+135,Millet,Agricole,Interligne étroit,Interligne étroit,3
+136,Avoine,Agricole,Interligne étroit,Interligne étroit,3
+137,Seigle,Agricole,Interligne étroit,Interligne étroit,3
+138,Épeautre,Agricole,Interligne étroit,Interligne étroit,3
+139,Triticale,Agricole,Interligne étroit,Interligne étroit,3
+140,Blé,Agricole,Interligne étroit,Interligne étroit,3
+152,Caméline,Agricole,Interligne étroit,Interligne étroit,3
+153,Canola/Colza,Agricole,Interligne étroit,Interligne étroit,3
+154,Graines de lin,Agricole,Interligne étroit,Interligne étroit,3
+155,Moutarde,Agricole,Interligne étroit,Interligne étroit,3
+156,Carthame,Agricole,Interligne étroit,Interligne étroit,3
+195,Sarrasin,Agricole,Interligne étroit,Interligne étroit,3
+196,Alpiste des Canaries,Agricole,Interligne étroit,Interligne étroit,3
+5000,Marais,Humide,Marais,Marais,13
+4000,Marécage,Humide,Marécage,Marécage,21
+4050,Arbustes\Marécage,Humide,Marécage,Marécage,21
+4051,Arbustes bas\Marécage,Humide,Marécage,Marécage,21
+4053,Arbustes hauts\Marécage,Humide,Marécage,Marécage,21
+4211,"Forêt de conifères
+dense\Marécage",Humide,Marécage,Marécage,21
+4213,"Forêt de conifères
+éparse\Marécage",Humide,Marécage,Marécage,21
+4215,"Forêt de conifères
+ouverte\Marécage",Humide,Marécage,Marécage,21
+4221,Forêt de feuillus dense\Marécage,Humide,Marécage,Marécage,21
+4223,Forêt de feuillus éparse\Marécage,Humide,Marécage,Marécage,21
+4225,"Forêt de feuillus
+ouverte\Marécage",Humide,Marécage,Marécage,21
+4231,Forêt mixte dense\Marécage,Humide,Marécage,Marécage,21
+4233,Forêt mixte éparse\Marécage,Humide,Marécage,Marécage,21
+4235,Forêt mixte ouverte\Marécage,Humide,Marécage,Marécage,21
+4250,Opérations forestières\Marécage,"Coupes et
+régénérations",Marécage perturbé,Marécage perturbé,21
+4253,Coupe forestière\Marécage,"Coupes et
+régénérations",Marécage perturbé,Marécage perturbé,21
+4255,Plantation\Marécage,"Coupes et
+régénérations",Marécage perturbé,Marécage perturbé,21
+4263,Brûlis\Marécage,"Coupes et
+régénérations",Marécage perturbé,Marécage perturbé,21
+4280,Perturbation naturelle\Marécage,"Coupes et
+régénérations",Marécage perturbé,Marécage perturbé,21
+10,Nuages,Non classifié,Non classifié,Non classifié,0
+999,Territoire non photo-interprété,Non classifié,Non classifié,Non classifié,0
+21,Lac,Aquatique,Plan d'eau,Plan d'eau,9
+22,Mare,Aquatique,Plan d'eau,Plan d'eau,9
+23,Réservoir,Aquatique,Plan d'eau,Plan d'eau,9
+1000,Tourbière ouverte,Humide,Tourbière,Tourbière,21
+2000,Tourbière,Humide,Tourbière,Tourbière,21
+2050,Arbustes\Tourbière,Humide,Tourbière,Tourbière,21
+2051,Arbustes bas\Tourbière,Humide,Tourbière,Tourbière,21
+2053,Arbustes hauts\Tourbière,Humide,Tourbière,Tourbière,21
+2211,"Forêt de conifères
+dense\Tourbière",Humide,Tourbière forestière,Tourbière,21
+2213,"Forêt de conifères
+éparse\Tourbière",Humide,Tourbière forestière,Tourbière,21
+2215,"Forêt de conifères
+ouverte\Tourbière",Humide,Tourbière forestière,Tourbière,21
+2221,Forêt de feuillus dense\Tourbière,Humide,Tourbière forestière,Tourbière,21
+2223,Forêt de feuillus éparse\Tourbière,Humide,Tourbière forestière,Tourbière,21
+2225,"Forêt de feuillus
+ouverte\Tourbière",Humide,Tourbière forestière,Tourbière,21
+2231,Forêt mixte dense\Tourbière,Humide,Tourbière forestière,Tourbière,21
+2233,Forêt mixte éparse\Tourbière,Humide,Tourbière forestière,Tourbière,21
+2235,Forêt mixte ouverte\Tourbière,Humide,Tourbière forestière,Tourbière,21
+2250,Opérations forestières\Tourbière,Coupes et régénérations,Tourbière forestière perturbée,Tourbière forestière perturbée,21
+2253,Coupe forestière\Tourbière,Coupes et régénérations,Tourbière forestière perturbée,Tourbière forestière perturbée,21
+2255,Plantation\Tourbière,Coupes et régénérations,Tourbière forestière perturbée,Tourbière forestière perturbée,21
+2263,Brûlis\Tourbière,Coupes et régénérations,Tourbière forestière perturbée,Tourbière forestière perturbée,21
+2280,Perturbation naturelle\Tourbière,Coupes et régénérations,Tourbière forestière perturbée,Tourbière forestière perturbée,21
+5020,Eau/Marais,Aquatique,,,9
+5021,Lac/Marais,Aquatique,,,9
+5022,Mare et/ou eau peu profonde/Marais,Aquatique,,,9
+5023,RÃ©servoir/Marais,Aquatique,,,9
+5024,Cours d'eau/Marais,Aquatique,,,9
+5025,Eau salÃ©e/Marais,Aquatique,,,9
+5026,Eau saumÃ¢tre/Marais,Aquatique,,,9
+5027,Lac de thermokartz/Marais,Aquatique,,,9
+5030,"Sol nu, roc-sol Ã  nu, sol dÃ©nudÃ© ou semi-dÃ©nudÃ© sec/Marais",Humide,,,13
+5050,Arbuste/Marais,Humide,,,13
+5051,Arbuste bas/Marais,Humide,,,13
+5053,Arbuste haut/Marais,Humide,,,13
+5060,Lichenais/Marais,Humide,,,13
+5061,Lande Ã  mousse/Marais,Humide,,,13
+5120,Agriculture indiffÃ©renciÃ©e/Marais,Agricole,,,7
+5122,Culture pÃ©renne et pÃ¢turage/Marais,Agricole,,,7
+5133,Orge/Marais,Agricole,,,7
+5136,Avoine/Marais,Agricole,,,7
+5137,Seigle/Marais,Agricole,,,7
+5140,BlÃ©/Marais,Agricole,,,7
+5141,Panic Ã©rigÃ©/Marais,Agricole,,,7
+5147,MaÃ¯s/Marais,Agricole,,,7
+5153,Canola ou colza/Marais,Agricole,,,7
+5154,Graine de lin/Marais,Agricole,,,7
+5158,Soya/Marais,Agricole,,,7
+5162,Pois/Marais,Agricole,,,7
+5167,Haricot/Marais,Agricole,,,7
+5170,Carotte/Panais/Marais,Agricole,,,7
+5175,Autre lÃ©gume/Marais,Agricole,,,7
+5177,Pomme de terre/Marais,Agricole,,,7
+5181,Baie/Marais,Agricole,,,7
+5182,Canneberge/Marais,Agricole,,,7
+5183,Bleuet/Marais,Agricole,,,7
+5195,Sarrasin/Marais,Agricole,,,7
+5210,ForÃªt de conifÃ¨res/Marais,Humide,,,13
+5211,ForÃªt de conifÃ¨res dense/Marais,Humide,,,13
+5213,ForÃªt de conifÃ¨res clairsemÃ©e/Marais,Humide,,,13
+5215,ForÃªt de conifÃ¨res ouverte/Marais,Humide,,,13
+5220,ForÃªt de feuillus/Marais,Humide,,,13
+5221,ForÃªt de feuillus dense/Marais,Humide,,,13
+5225,ForÃªt de feuillus ouverte/Marais,Humide,,,13
+5230,ForÃªt mixte/Marais,Humide,,,13
+5231,ForÃªt mixte dense/Marais,Humide,,,13
+5233,ForÃªt mixte clairsemÃ©e/Marais,Humide,,,13
+5235,ForÃªt mixte ouverte/Marais,Humide,,,13
+5253,Coupe forestiÃ¨re/Marais,Coupe et rÃ©gÃ©nÃ©ration,,,21
+5255,Plantation/Marais,Coupe et rÃ©gÃ©nÃ©ration,,,21
+5263,BrÃ»lis/Marais,Humide,,,13
+5280,Perturbation naturelle/Marais,Humide,,,13
+5300,Autre terrain/Marais,Anthropique,,,1
+5301,Zone dÃ©veloppÃ©e/Marais,Anthropique,,,1
+5312,Pistes de ski alpin/Marais,Anthropique,,,1
+5313,Golf/Marais,Anthropique,,,1
+5320,Route ou chemin/Marais,Anthropique,,,1
+5321,AÃ©roport/Marais,Anthropique,,,1
+5322,Chemin de fer/Marais,Anthropique,,,1
+5341,CarriÃ¨re ou graviÃ¨re/Marais,Anthropique,,,1
+5343,Mine et dÃ©chet de mine/Marais,Anthropique,,,1
+5344,"Bassin de filtration, de dÃ©contamination, de dÃ©chets liquides, etc./Marais",Anthropique,,,1
+5345,DÃ©potoir/Marais,Anthropique,,,1
+5346,Zone industrielle et commerce/Marais,Anthropique,,,1
+5351,Ligne de transmission ou de transport d'Ã©nergie/Marais,Anthropique,,,1
+5360,Exploitation de tourbe/Marais,Anthropique,,,1
+6000,TourbiÃ¨re minÃ©rotrophe,Humide,,,21
+6020,Eau/TourbiÃ¨re minÃ©rotrophe,Aquatique,,,9
+6021,Lac/TourbiÃ¨re minÃ©rotrophe,Aquatique,,,9
+6022,Mare et/ou eau peu profonde/TourbiÃ¨re minÃ©rotrophe,Aquatique,,,9
+6023,RÃ©servoir/TourbiÃ¨re minÃ©rotrophe,Aquatique,,,9
+6024,Cours d'eau/TourbiÃ¨re minÃ©rotrophe,Aquatique,,,9
+6025,Eau salÃ©e/TourbiÃ¨re minÃ©rotrophe,Aquatique,,,9
+6026,Eau saumÃ¢tre/TourbiÃ¨re minÃ©rotrophe,Aquatique,,,9
+6027,Lac de thermokartz/TourbiÃ¨re minÃ©rotrophe,Aquatique,,,9
+6030,"Sol nu, roc-sol Ã  nu, sol dÃ©nudÃ© ou semi-dÃ©nudÃ© sec/TourbiÃ¨re minÃ©rotrophe",Humide,,,21
+6050,Arbuste/TourbiÃ¨re minÃ©rotrophe,Humide,,,21
+6051,Arbuste bas/TourbiÃ¨re minÃ©rotrophe,Humide,,,21
+6053,Arbuste haut/TourbiÃ¨re minÃ©rotrophe,Humide,,,21
+6055,Friche/TourbiÃ¨re minÃ©rotrophe,Humide,,,21
+6061,Lande Ã  mousse/TourbiÃ¨re minÃ©rotrophe,Humide,,,21
+6101,Serre/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6120,Agriculture indiffÃ©renciÃ©e/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6122,Culture pÃ©renne et pÃ¢turage/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6131,JachÃ¨re/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6133,Orge/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6135,Millet/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6136,Avoine/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6137,Seigle/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6140,BlÃ©/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6141,Panic Ã©rigÃ©/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6147,MaÃ¯s/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6153,Canola ou colza/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6154,Graine de lin/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6158,Soya/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6160,Autre lÃ©gumineuse/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6162,Pois/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6167,Haricot/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6168,Laitue/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6169,Ail/Oignon/Poireau/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6170,Carotte/Panais/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6175,Autre lÃ©gume/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6177,Pomme de terre/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6181,Baie/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6182,Canneberge/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6183,Bleuet/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6188,Verger/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6194,PÃ©piniÃ¨re/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6195,Sarrasin/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6197,Chanvre/TourbiÃ¨re minÃ©rotrophe,Agricole,,,7
+6210,ForÃªt de conifÃ¨res/TourbiÃ¨re minÃ©rotrophe,Humide,,,21
+6211,ForÃªt de conifÃ¨res dense/TourbiÃ¨re minÃ©rotrophe,Humide,,,21
+6213,ForÃªt de conifÃ¨res clairsemÃ©e/TourbiÃ¨re minÃ©rotrophe,Humide,,,21
+6215,ForÃªt de conifÃ¨res ouverte/TourbiÃ¨re minÃ©rotrophe,Humide,,,21
+6220,ForÃªt de feuillus/TourbiÃ¨re minÃ©rotrophe,Humide,,,21
+6221,ForÃªt de feuillus dense/TourbiÃ¨re minÃ©rotrophe,Humide,,,21
+6223,ForÃªt de feuillus clairsemÃ©e/TourbiÃ¨re minÃ©rotrophe,Humide,,,21
+6225,ForÃªt de feuillus ouverte/TourbiÃ¨re minÃ©rotrophe,Humide,,,21
+6230,ForÃªt mixte/TourbiÃ¨re minÃ©rotrophe,Humide,,,21
+6231,ForÃªt mixte dense/TourbiÃ¨re minÃ©rotrophe,Humide,,,21
+6233,ForÃªt mixte clairsemÃ©e/TourbiÃ¨re minÃ©rotrophe,Humide,,,21
+6235,ForÃªt mixte ouverte/TourbiÃ¨re minÃ©rotrophe,Humide,,,21
+6250,OpÃ©ration forestiÃ¨re/TourbiÃ¨re minÃ©rotrophe,Coupe et rÃ©gÃ©nÃ©ration,,,21
+6253,Coupe forestiÃ¨re/TourbiÃ¨re minÃ©rotrophe,Coupe et rÃ©gÃ©nÃ©ration,,,21
+6255,Plantation/TourbiÃ¨re minÃ©rotrophe,Coupe et rÃ©gÃ©nÃ©ration,,,21
+6263,BrÃ»lis/TourbiÃ¨re minÃ©rotrophe,Humide,,,21
+6280,Perturbation naturelle/TourbiÃ¨re minÃ©rotrophe,Humide,,,21
+6300,Autre terrain/TourbiÃ¨re minÃ©rotrophe,Anthropique,,,1
+6301,Zone dÃ©veloppÃ©e/TourbiÃ¨re minÃ©rotrophe,Anthropique,,,1
+6312,Pistes de ski alpin/TourbiÃ¨re minÃ©rotrophe,Anthropique,,,1
+6313,Golf/TourbiÃ¨re minÃ©rotrophe,Anthropique,,,1
+6320,Route ou chemin/TourbiÃ¨re minÃ©rotrophe,Anthropique,,,1
+6321,AÃ©roport/TourbiÃ¨re minÃ©rotrophe,Anthropique,,,1
+6322,Chemin de fer/TourbiÃ¨re minÃ©rotrophe,Anthropique,,,1
+6341,CarriÃ¨re ou graviÃ¨re/TourbiÃ¨re minÃ©rotrophe,Anthropique,,,1
+6343,Mine et dÃ©chet de mine/TourbiÃ¨re minÃ©rotrophe,Anthropique,,,1
+6344,"Bassin de filtration, de dÃ©contamination, de dÃ©chets liquides, etc./TourbiÃ¨re minÃ©rotrophe",Anthropique,,,1
+6345,DÃ©potoir/TourbiÃ¨re minÃ©rotrophe,Anthropique,,,1
+6346,Zone industrielle et commerce/TourbiÃ¨re minÃ©rotrophe,Anthropique,,,1
+6351,Ligne de transmission ou de transport d'Ã©nergie/TourbiÃ¨re minÃ©rotrophe,Anthropique,,,1
+6360,Exploitation de tourbe/TourbiÃ¨re minÃ©rotrophe,Anthropique,,,1
+7000,Prairie humide,Humide,,,21
+7020,Eau/Prairie humide,Aquatique,,,9
+7021,Lac/Prairie humide,Aquatique,,,9
+7022,Mare et/ou eau peu profonde/Prairie humide,Aquatique,,,9
+7023,RÃ©servoir/Prairie humide,Aquatique,,,9
+7024,Cours d'eau/Prairie humide,Aquatique,,,9
+7026,Eau saumÃ¢tre/Prairie humide,Aquatique,,,9
+7030,"Sol nu, roc-sol Ã  nu, sol dÃ©nudÃ© ou semi-dÃ©nudÃ© sec/Prairie humide",Sol nu et lande,,,19
+7050,Arbuste/Prairie humide,Forestier,,,11
+7051,Arbuste bas/Prairie humide,Forestier,,,11
+7053,Arbuste haut/Prairie humide,Forestier,,,11
+7120,Agriculture indiffÃ©renciÃ©e/Prairie humide,Agricole,,,7
+7122,Culture pÃ©renne et pÃ¢turage/Prairie humide,Agricole,,,7
+7133,Orge/Prairie humide,Agricole,,,7
+7135,Millet/Prairie humide,Agricole,,,7
+7136,Avoine/Prairie humide,Agricole,,,7
+7137,Seigle/Prairie humide,Agricole,,,7
+7140,BlÃ©/Prairie humide,Agricole,,,7
+7141,Panic Ã©rigÃ©/Prairie humide,Agricole,,,7
+7147,MaÃ¯s/Prairie humide,Agricole,,,7
+7153,Canola ou colza/Prairie humide,Agricole,,,7
+7158,Soya/Prairie humide,Agricole,,,7
+7160,Autre lÃ©gumineuse/Prairie humide,Agricole,,,7
+7162,Pois/Prairie humide,Agricole,,,7
+7167,Haricot/Prairie humide,Agricole,,,7
+7170,Carotte/Panais/Prairie humide,Agricole,,,7
+7175,Autre lÃ©gume/Prairie humide,Agricole,,,7
+7177,Pomme de terre/Prairie humide,Agricole,,,7
+7178,Betterave Ã  sucre/Prairie humide,Agricole,,,7
+7182,Canneberge/Prairie humide,Agricole,,,7
+7183,Bleuet/Prairie humide,Agricole,,,7
+7195,Sarrasin/Prairie humide,Agricole,,,7
+7210,ForÃªt de conifÃ¨res/Prairie humide,Forestier,,,17
+7211,ForÃªt de conifÃ¨res dense/Prairie humide,Forestier,,,17
+7215,ForÃªt de conifÃ¨res ouverte/Prairie humide,Forestier,,,17
+7220,ForÃªt de feuillus/Prairie humide,Forestier,,,15
+7221,ForÃªt de feuillus dense/Prairie humide,Forestier,,,15
+7225,ForÃªt de feuillus ouverte/Prairie humide,Forestier,,,15
+7230,ForÃªt mixte/Prairie humide,Forestier,,,16
+7231,ForÃªt mixte dense/Prairie humide,Forestier,,,16
+7235,ForÃªt mixte ouverte/Prairie humide,Forestier,,,16
+7253,Coupe forestiÃ¨re/Prairie humide,Coupe et rÃ©gÃ©nÃ©ration,,,21
+7255,Plantation/Prairie humide,Coupe et rÃ©gÃ©nÃ©ration,,,21
+7263,BrÃ»lis/Prairie humide,Coupe et rÃ©gÃ©nÃ©ration,,,21
+7280,Perturbation naturelle/Prairie humide,Coupe et rÃ©gÃ©nÃ©ration,,,21
+7300,Autre terrain/Prairie humide,Anthropique,,,1
+7301,Zone dÃ©veloppÃ©e/Prairie humide,Anthropique,,,1
+7312,Pistes de ski alpin/Prairie humide,Anthropique,,,1
+7313,Golf/Prairie humide,Anthropique,,,1
+7320,Route ou chemin/Prairie humide,Anthropique,,,1
+7321,AÃ©roport/Prairie humide,Anthropique,,,1
+7322,Chemin de fer/Prairie humide,Anthropique,,,1
+7341,CarriÃ¨re ou graviÃ¨re/Prairie humide,Anthropique,,,1
+7343,Mine et dÃ©chet de mine/Prairie humide,Anthropique,,,1
+7344,"Bassin de filtration, de dÃ©contamination, de dÃ©chets liquides, etc./Prairie humide",Anthropique,,,1
+7345,DÃ©potoir/Prairie humide,Anthropique,,,1
+7346,Zone industrielle et commerce/Prairie humide,Anthropique,,,1
+7351,Ligne de transmission ou de transport d'Ã©nergie/Prairie humide,Anthropique,,,1
+8000,TourbiÃ¨re ombrotrophe,Humide,,,21
+8020,Eau/TourbiÃ¨re ombrotrophe,Aquatique,,,9
+8021,Lac/TourbiÃ¨re ombrotrophe,Aquatique,,,9
+8022,Mare et/ou eau peu profonde/TourbiÃ¨re ombrotrophe,Aquatique,,,9
+8023,RÃ©servoir/TourbiÃ¨re ombrotrophe,Aquatique,,,9
+8024,Cours d'eau/TourbiÃ¨re ombrotrophe,Aquatique,,,9
+8025,Eau salÃ©e/TourbiÃ¨re ombrotrophe,Aquatique,,,9
+8026,Eau saumÃ¢tre/TourbiÃ¨re ombrotrophe,Aquatique,,,9
+8030,"Sol nu, roc-sol Ã  nu, sol dÃ©nudÃ© ou semi-dÃ©nudÃ© sec/TourbiÃ¨re ombrotrophe",Humide,,,21
+8050,Arbuste/TourbiÃ¨re ombrotrophe,Humide,,,21
+8051,Arbuste bas/TourbiÃ¨re ombrotrophe,Humide,,,21
+8053,Arbuste haut/TourbiÃ¨re ombrotrophe,Humide,,,21
+8060,Lichenais/TourbiÃ¨re ombrotrophe,Humide,,,21
+8120,Agriculture indiffÃ©renciÃ©e/TourbiÃ¨re ombrotrophe,Agricole,,,7
+8122,Culture pÃ©renne et pÃ¢turage/TourbiÃ¨re ombrotrophe,Agricole,,,7
+8131,JachÃ¨re/TourbiÃ¨re ombrotrophe,Agricole,,,7
+8133,Orge/TourbiÃ¨re ombrotrophe,Agricole,,,7
+8135,Millet/TourbiÃ¨re ombrotrophe,Agricole,,,7
+8136,Avoine/TourbiÃ¨re ombrotrophe,Agricole,,,7
+8137,Seigle/TourbiÃ¨re ombrotrophe,Agricole,,,7
+8140,BlÃ©/TourbiÃ¨re ombrotrophe,Agricole,,,7
+8147,MaÃ¯s/TourbiÃ¨re ombrotrophe,Agricole,,,7
+8153,Canola ou colza/TourbiÃ¨re ombrotrophe,Agricole,,,7
+8158,Soya/TourbiÃ¨re ombrotrophe,Agricole,,,7
+8160,Autre lÃ©gumineuse/TourbiÃ¨re ombrotrophe,Agricole,,,7
+8167,Haricot/TourbiÃ¨re ombrotrophe,Agricole,,,7
+8168,Laitue/TourbiÃ¨re ombrotrophe,Agricole,,,7
+8169,Ail/Oignon/Poireau/TourbiÃ¨re ombrotrophe,Agricole,,,7
+8170,Carotte/Panais/TourbiÃ¨re ombrotrophe,Agricole,,,7
+8175,Autre lÃ©gume/TourbiÃ¨re ombrotrophe,Agricole,,,7
+8177,Pomme de terre/TourbiÃ¨re ombrotrophe,Agricole,,,7
+8182,Canneberge/TourbiÃ¨re ombrotrophe,Agricole,,,7
+8183,Bleuet/TourbiÃ¨re ombrotrophe,Agricole,,,7
+8195,Sarrasin/TourbiÃ¨re ombrotrophe,Agricole,,,7
+8210,ForÃªt de conifÃ¨res/TourbiÃ¨re ombrotrophe,Humide,,,21
+8211,ForÃªt de conifÃ¨res dense/TourbiÃ¨re ombrotrophe,Humide,,,21
+8213,ForÃªt de conifÃ¨res clairsemÃ©e/TourbiÃ¨re ombrotrophe,Humide,,,21
+8215,ForÃªt de conifÃ¨res ouverte/TourbiÃ¨re ombrotrophe,Humide,,,21
+8220,ForÃªt de feuillus/TourbiÃ¨re ombrotrophe,Humide,,,21
+8221,ForÃªt de feuillus dense/TourbiÃ¨re ombrotrophe,Humide,,,21
+8223,ForÃªt de feuillus clairsemÃ©e/TourbiÃ¨re ombrotrophe,Humide,,,21
+8225,ForÃªt de feuillus ouverte/TourbiÃ¨re ombrotrophe,Humide,,,21
+8230,ForÃªt mixte/TourbiÃ¨re ombrotrophe,Humide,,,21
+8231,ForÃªt mixte dense/TourbiÃ¨re ombrotrophe,Humide,,,21
+8233,ForÃªt mixte clairsemÃ©e/TourbiÃ¨re ombrotrophe,Humide,,,21
+8235,ForÃªt mixte ouverte/TourbiÃ¨re ombrotrophe,Humide,,,21
+8250,OpÃ©ration forestiÃ¨re/TourbiÃ¨re ombrotrophe,Coupe et rÃ©gÃ©nÃ©ration,,,21
+8253,Coupe forestiÃ¨re/TourbiÃ¨re ombrotrophe,Coupe et rÃ©gÃ©nÃ©ration,,,21
+8255,Plantation/TourbiÃ¨re ombrotrophe,Coupe et rÃ©gÃ©nÃ©ration,,,21
+8263,BrÃ»lis/TourbiÃ¨re ombrotrophe,Humide,,,21
+8280,Perturbation naturelle/TourbiÃ¨re ombrotrophe,Humide,,,21
+8300,Autre terrain/TourbiÃ¨re ombrotrophe,Anthropique,,,1
+8301,Zone dÃ©veloppÃ©e/TourbiÃ¨re ombrotrophe,Anthropique,,,1
+8313,Golf/TourbiÃ¨re ombrotrophe,Anthropique,,,1
+8320,Route ou chemin/TourbiÃ¨re ombrotrophe,Anthropique,,,1
+8321,AÃ©roport/TourbiÃ¨re ombrotrophe,Anthropique,,,1
+8322,Chemin de fer/TourbiÃ¨re ombrotrophe,Anthropique,,,1
+8341,CarriÃ¨re ou graviÃ¨re/TourbiÃ¨re ombrotrophe,Anthropique,,,1
+8343,Mine et dÃ©chet de mine/TourbiÃ¨re ombrotrophe,Anthropique,,,1
+8344,"Bassin de filtration, de dÃ©contamination, de dÃ©chets liquides, etc./TourbiÃ¨re ombrotrophe",Anthropique,,,1
+8345,DÃ©potoir/TourbiÃ¨re ombrotrophe,Anthropique,,,1
+8346,Zone industrielle et commerce/TourbiÃ¨re ombrotrophe,Anthropique,,,1
+8351,Ligne de transmission ou de transport d'Ã©nergie/TourbiÃ¨re ombrotrophe,Anthropique,,,1
+8360,Exploitation de tourbe/TourbiÃ¨re ombrotrophe,Anthropique,,,1
+9999,Territoire non photo-interprÃ©tÃ©,Non classifiÃ©,,,0
