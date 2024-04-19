@@ -13,6 +13,7 @@
 library(terra)
 library(sf)
 library(tidyverse)
+library(rgrass)
 
 
 
@@ -28,4 +29,16 @@ outputDir <- file.path(rootDir, "Output")
 tabularDataDir <- file.path(dataDir, "Tabular")
 spatialDataDir <- file.path(dataDir, "Spatial")
 
+# GRASS Parameters -------------------------------------------------------------
+gisBase <- "C:/Program Files/GRASS GIS 7.8"
+gisDbase <- getwd()
+grassLocation <- "a312"
 
+doGRASSSetup <- TRUE
+
+# Other Parameters -------------------------------------------------------------
+# List of species codes
+speciesList <- c("MAAM", "BLBR", "URAM", "PLCI", "RASY")
+
+# Species that should have gaps within patches filled
+speciesFillGaps <- c('MAAM','URAM')
