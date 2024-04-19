@@ -2,8 +2,18 @@
 .Rhistory
 
 # Folders
-/Data
+/Data/Tabular/Other
+/Data/Spatial
 /Intermediates
 /Output
 
+# R Files
+.Rproj.user
+*.Rproj
+
+# GRASS
+/a312
+
+# QGIS 
+/QGIS Projects
 
