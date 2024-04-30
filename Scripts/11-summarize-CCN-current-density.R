@@ -46,6 +46,12 @@ PA <- st_read(dsn = file.path(spatialDataDir,
               layer = "AiresProtegees_outaouais2023") %>%
   st_transform(crs("EPSG: 32198"))
 
+# MRC
+allMRCs <- st_read(dsn = file.path(spatialDataDir, 
+                                   "MRCs"),
+                   layer = "MRC_s_2021_02") %>%
+  st_transform(crs("EPSG: 32198"))
+
 
 
 # Fix CRS in current density maps ----------------------------------------------
@@ -126,22 +132,37 @@ CCNcorridors_combined <- CCNcorridors_buffered %>%
 # Minimum convex polygon around CCN corridors
 minConvexPolygon <- st_convex_hull(CCNcorridors_combined)
 
+# Filter target MRC
+targetMRC <- allMRCs %>%
+  filter(MRS_NM_MRC == "Gatineau" | 
+         MRS_NM_MRC == "Les Collines-de-l'Outaouais" |
+         MRS_NM_MRC == "Pontiac")
+
+# Remove areas beyond the MRC boundary
+minConvexPolygon_mask <- st_intersection(minConvexPolygon, targetMRC)
+
+# Merge boundaries
+minConvexPolygon_merged <- minConvexPolygon_mask %>%
+  st_union() %>%
+  st_as_sf() %>%
+  st_set_geometry("geometry")
+
 # Mask and crop current density to minimum convex polygon 
 BLBRcurrent_ext <- BLBRcurrent_crs %>%
-  mask(minConvexPolygon) %>%
-  crop(minConvexPolygon)
+  mask(minConvexPolygon_merged) %>%
+  crop(minConvexPolygon_merged)
 MAAMcurrent_ext <- MAAMcurrent_crs %>%
-  mask(minConvexPolygon) %>%
-  crop(minConvexPolygon)
+  mask(minConvexPolygon_merged) %>%
+  crop(minConvexPolygon_merged)
 PLCIcurrent_ext <- PLCIcurrent_crs %>%
-  mask(minConvexPolygon) %>%
-  crop(minConvexPolygon)
+  mask(minConvexPolygon_merged) %>%
+  crop(minConvexPolygon_merged)
 RASYcurrent_ext <- RASYcurrent_crs %>%
-  mask(minConvexPolygon) %>%
-  crop(minConvexPolygon)
+  mask(minConvexPolygon_merged) %>%
+  crop(minConvexPolygon_merged)
 URAMcurrent_ext <- URAMcurrent_crs %>%
-  mask(minConvexPolygon) %>%
-  crop(minConvexPolygon)
+  mask(minConvexPolygon_merged) %>%
+  crop(minConvexPolygon_merged)
 
 
 
@@ -175,7 +196,7 @@ corridorName$Name[corridorName$Name == "ruisseau Breckenridge"] <- "Ruisseau Bre
 
 # Add sorting order
 corridorName$CorridorOrder <- c(5, 6, 3, 1, 11, 9, 10, 8, 7, 4, 2, 12)
-corridorName$AlphabeticalOrder <- c(3, 1, 11, 5, 10, 2, 7, 6, 8, 4, 12, 9)
+corridorName$AlphabeticalOrder <- c(10, 2, 11, 3, 12, 8, 4, 6, 7, 5, 1, 9)
 
 # Function to convert polygon to raster and mask current density to corridor
 maskCCN = function(rasterObject, polygonObject, inverse = FALSE){
@@ -277,15 +298,44 @@ corridor_values <- function(sppCurrentList){
 
 # Calculate summary and get values per corridor
 BLBR_summaryPerCorridor <- corridor_summary(BLBRcurrent_CCNmask)
+BLBR_summaryPerCorridor$Species <- "BLBR"
 BLBR_valuesPerCorridor <- corridor_values(BLBRcurrent_CCNmask)
+BLBR_valuesPerCorridor$Species <- "BLBR"
 MAAM_summaryPerCorridor <- corridor_summary(MAAMcurrent_CCNmask)
+MAAM_summaryPerCorridor$Species <- "MAAM"
 MAAM_valuesPerCorridor <- corridor_values(MAAMcurrent_CCNmask)
+MAAM_valuesPerCorridor$Species <- "MAAM"
 PLCI_summaryPerCorridor <- corridor_summary(PLCIcurrent_CCNmask)
+PLCI_summaryPerCorridor$Species <- "PLCI"
 PLCI_valuesPerCorridor <- corridor_values(PLCIcurrent_CCNmask)
+PLCI_valuesPerCorridor$Species <- "PLCI"
 RASY_summaryPerCorridor <- corridor_summary(RASYcurrent_CCNmask)
+RASY_summaryPerCorridor$Species <- "RASY"
 RASY_valuesPerCorridor <- corridor_values(RASYcurrent_CCNmask)
+RASY_valuesPerCorridor$Species <- "RASY"
 URAM_summaryPerCorridor <- corridor_summary(URAMcurrent_CCNmask)
+URAM_summaryPerCorridor$Species <- "URAM"
 URAM_valuesPerCorridor <- corridor_values(URAMcurrent_CCNmask)
+URAM_valuesPerCorridor$Species <- "URAM"
+
+# Combine summary per corridor
+summaryPerCorridor <- rbind(BLBR_summaryPerCorridor,
+                            MAAM_summaryPerCorridor,
+                            PLCI_summaryPerCorridor,
+                            RASY_summaryPerCorridor,
+                            URAM_summaryPerCorridor)
+
+# Combine corridor values
+valuesPerCorridor <- rbind(BLBR_valuesPerCorridor,
+                           MAAM_valuesPerCorridor,
+                           PLCI_valuesPerCorridor,
+                           RASY_valuesPerCorridor,
+                           URAM_valuesPerCorridor)
+
+# Summary per species
+summaryPerSpecies <- valuesPerCorridor %>%
+  group_by(Species) %>%
+  summarize(Mean = mean(Value))
 
 
 
@@ -320,19 +370,20 @@ RASYcurrent_nonCCNmask <- mask(RASYcurrent_nonCCNmask,
 URAMcurrent_nonCCNmask <- mask(URAMcurrent_nonCCNmask, 
                                gatineauPA, inverse = TRUE)
 
-# Function to calculate mean current density outside each corridor
-nonCorridor_summary = function(summaryPerCorridor, sppCurrentList){
+# Function to sample current density outside each corridor
+nonCorridor_sample = function(summaryPerCorridor, sppCurrentList, spp){
   
   # Empty dataframe
-  summaryNonCorridor <- data.frame(ID = as.numeric(),
-                                   Mean = as.numeric())
+  sampleNonCorridor <- data.frame(ID = as.numeric(),
+                                  Value = as.numeric(),
+                                  Species = as.character())
   
   # For each corridor, 
   # sample current density in number of cells equal to corridor size
   for(i in 1:12){
     
     # Repeating 100 times
-    for(loopID in 1:100){
+    for(loopID in 1:200){
       
       # Get corridor size
       sampleSize <- summaryPerCorridor$NumberOfCells[summaryPerCorridor$ID == i]
@@ -342,30 +393,52 @@ nonCorridor_summary = function(summaryPerCorridor, sppCurrentList){
                               sampleSize,
                               method = "random", na.rm = TRUE)
       
+      # Remove NA values
+      oneSampleValues <- oneSample[]
+      oneSampleValues <- oneSampleValues[!is.na(oneSampleValues)]
+      
       # Calculate mean
-      meanValue <- mean(oneSample[,1])
+      meanValue <- mean(oneSampleValues, na.rm = TRUE)
       
       # Combine results
       tempDF <- data.frame(ID = i,
-                           Mean = meanValue)
-      summaryNonCorridor <- rbind(summaryNonCorridor, tempDF)
+                           Value = meanValue, 
+                           Species = spp)
+      sampleNonCorridor <- rbind(sampleNonCorridor, tempDF)
       
     }
   }
-  return(summaryNonCorridor)
-} 
-  
-# Calculate mean current density outside each corridor
-BLBR_summaryNonCorridor <- nonCorridor_summary(BLBR_summaryPerCorridor,
-                                               BLBRcurrent_nonCCNmask)
-MAAM_summaryNonCorridor <- nonCorridor_summary(MAAM_summaryPerCorridor,
-                                               MAAMcurrent_nonCCNmask)
-PLCI_summaryNonCorridor <- nonCorridor_summary(PLCI_summaryPerCorridor,
-                                               PLCIcurrent_nonCCNmask)
-RASY_summaryNonCorridor <- nonCorridor_summary(RASY_summaryPerCorridor,
-                                               RASYcurrent_nonCCNmask)
-URAM_summaryNonCorridor <- nonCorridor_summary(URAM_summaryPerCorridor,
-                                               URAMcurrent_nonCCNmask)
+  return(sampleNonCorridor)
+}
+
+# Sample current density outside outside each corridor
+BLBR_sampleNonCorridor <- nonCorridor_sample(BLBR_summaryPerCorridor,
+                                             BLBRcurrent_nonCCNmask,
+                                             "BLBR")
+MAAM_sampleNonCorridor <- nonCorridor_sample(MAAM_summaryPerCorridor,
+                                             MAAMcurrent_nonCCNmask,
+                                             "MAAM")
+PLCI_sampleNonCorridor <- nonCorridor_sample(PLCI_summaryPerCorridor,
+                                             PLCIcurrent_nonCCNmask,
+                                             "PLCI")
+RASY_sampleNonCorridor <- nonCorridor_sample(RASY_summaryPerCorridor,
+                                             RASYcurrent_nonCCNmask,
+                                             "RASY")
+URAM_sampleNonCorridor <- nonCorridor_sample(URAM_summaryPerCorridor,
+                                             URAMcurrent_nonCCNmask, 
+                                             "URAM")
+
+# Combine non-corridor sample across species
+sampleNonCorridor <- rbind(BLBR_sampleNonCorridor,
+                           MAAM_sampleNonCorridor,
+                           PLCI_sampleNonCorridor,
+                           RASY_sampleNonCorridor,
+                           URAM_sampleNonCorridor)
+rm(BLBR_sampleNonCorridor)
+rm(MAAM_sampleNonCorridor)
+rm(PLCI_sampleNonCorridor)
+rm(RASY_sampleNonCorridor)
+rm(URAM_sampleNonCorridor)
 
 # Function to calculate 95% confidence interval
 calculate_CI = function(vectorObject){
@@ -377,27 +450,45 @@ calculate_CI = function(vectorObject){
 }
 
 # Function to test significance of current density within vs. outside corridors
-corridor_significance = function(summaryNonCorridor, summaryPerCorridor){
+corridor_significance = function(nonCorridorSample = sampleNonCorridor, 
+                                 summaryPerCorridor, 
+                                 groupingVar){
   
-  # For each corridor, calculate 95% C.I. of current density outside corridors
-  # and see if it contains the mean current density of each corridor
-  for(i in 1:12){
+  # Set grouping variable list
+  if(groupingVar == "Corridor"){
+    iList <- 1:12
+    columnID <- 1
+  }
+  if(groupingVar == "Species"){
+    iList <- c("BLBR", "MAAM", "PLCI", "RASY", "URAM")
+    columnID <- 3
+  }
+  
+  # For each group variable, calculate 95% C.I. of current density outside 
+  # corridors and see if it contains the mean current density insider corridors
+  for(i in iList){
     
     # Subset current density sample outside corridor
-    targetCorridor_data <- summaryNonCorridor[summaryNonCorridor$ID == i,]
+    targetCorridor_data <- nonCorridorSample[nonCorridorSample[,columnID] == i,]
     
     # Calculate 95% C.I.
-    targetCorridor_CI <- calculate_CI(targetCorridor_data$Mean)
+    targetCorridor_CI <- calculate_CI(targetCorridor_data[,2])
     
     # Add C.I. values to per corridor summary dataframe
-    summaryPerCorridor$CIlower[summaryPerCorridor$ID == i] <- 
+    summaryPerCorridor$CIlower[summaryPerCorridor[,1] == i] <- 
       targetCorridor_CI[1]
-    summaryPerCorridor$CIupper[summaryPerCorridor$ID == i] <- 
+    summaryPerCorridor$CIupper[summaryPerCorridor[,1] == i] <- 
       targetCorridor_CI[2]
     
     # Get corridor mean current density
-    testValue <- summaryPerCorridor$Mean[summaryPerCorridor$ID == i]
+    if(groupingVar == "Corridor"){
+      testValue <- summaryPerCorridor$Mean[summaryPerCorridor$ID == i]
+    }
+    if(groupingVar == "Species"){
+      testValue <- summaryPerCorridor$Mean[summaryPerCorridor$Species == i]
+    }
     
+    # Test significance
     if(testValue < targetCorridor_CI[1]){
       significanceResult <- "-"
     }
@@ -408,24 +499,33 @@ corridor_significance = function(summaryNonCorridor, summaryPerCorridor){
       significanceResult <- NA
     } 
     
-    summaryPerCorridor$Significance[summaryPerCorridor$ID == i] <- 
+    summaryPerCorridor$Significance[summaryPerCorridor[,1] == i] <- 
       significanceResult
-    
+
   }
   return(summaryPerCorridor)
 }
 
 # Calculate significance of current density per corridor
-BLBR_summaryPerCorridor <- corridor_significance(BLBR_summaryNonCorridor,
-                                                 BLBR_summaryPerCorridor)
-MAAM_summaryPerCorridor <- corridor_significance(MAAM_summaryNonCorridor,
-                                                 MAAM_summaryPerCorridor)
-PLCI_summaryPerCorridor <- corridor_significance(PLCI_summaryNonCorridor,
-                                                 PLCI_summaryPerCorridor)
-RASY_summaryPerCorridor <- corridor_significance(RASY_summaryNonCorridor,
-                                                 RASY_summaryPerCorridor)
-URAM_summaryPerCorridor <- corridor_significance(URAM_summaryNonCorridor,
-                                                 URAM_summaryPerCorridor)
+BLBR_summaryPerCorridor <- corridor_significance(
+  summaryPerCorridor = BLBR_summaryPerCorridor,
+  groupingVar = "Corridor")
+MAAM_summaryPerCorridor <- corridor_significance(
+  summaryPerCorridor = MAAM_summaryPerCorridor,
+  groupingVar = "Corridor")
+PLCI_summaryPerCorridor <- corridor_significance(
+  summaryPerCorridor = PLCI_summaryPerCorridor,
+  groupingVar = "Corridor")
+RASY_summaryPerCorridor <- corridor_significance(
+  summaryPerCorridor = RASY_summaryPerCorridor,
+  groupingVar = "Corridor")
+URAM_summaryPerCorridor <- corridor_significance(
+  summaryPerCorridor = URAM_summaryPerCorridor,
+  groupingVar = "Corridor")
+
+# Calculate significance of current density per species
+summaryPerSpecies <- corridor_significance(summaryPerCorridor = summaryPerSpecies,
+                                           groupingVar = "Species")
 
 
 
@@ -438,7 +538,7 @@ calculate_outliers = function(x) {
 }
 
 # Function to detect outlier
-detect_outliers = function(valuesPerCorridor){
+detect_outliers_ID = function(valuesPerCorridor){
   
   outlierDF <- valuesPerCorridor %>% 
     group_by(ID) %>%
@@ -449,24 +549,19 @@ detect_outliers = function(valuesPerCorridor){
   
 }
 
-# Detect outliers
-BLBR_outliers <- detect_outliers(BLBR_valuesPerCorridor)
-MAAM_outliers <- detect_outliers(MAAM_valuesPerCorridor)
-PLCI_outliers <- detect_outliers(PLCI_valuesPerCorridor)
-RASY_outliers <- detect_outliers(RASY_valuesPerCorridor)
-URAM_outliers <- detect_outliers(URAM_valuesPerCorridor)
+# Detect outlier values
+BLBR_outliers <- detect_outliers_ID(BLBR_valuesPerCorridor)
+MAAM_outliers <- detect_outliers_ID(MAAM_valuesPerCorridor)
+PLCI_outliers <- detect_outliers_ID(PLCI_valuesPerCorridor)
+RASY_outliers <- detect_outliers_ID(RASY_valuesPerCorridor)
+URAM_outliers <- detect_outliers_ID(URAM_valuesPerCorridor)
 
 # Merge outlier values with corridor names
 BLBR_outlierAndName <- merge(BLBR_outliers, corridorName, by = "ID")
-BLBR_outlierAndName$Species <- "BLBR"
 MAAM_outlierAndName <- merge(MAAM_outliers, corridorName, by = "ID")
-MAAM_outlierAndName$Species <- "MAAM"
 PLCI_outlierAndName <- merge(PLCI_outliers, corridorName, by = "ID")
-PLCI_outlierAndName$Species <- "PLCI"
 RASY_outlierAndName <- merge(RASY_outliers, corridorName, by = "ID")
-RASY_outlierAndName$Species <- "RASY"
 URAM_outlierAndName <- merge(URAM_outliers, corridorName, by = "ID")
-URAM_outlierAndName$Species <- "URAM"
 
 # Combine results across species
 outlierAndName <- rbind(BLBR_outlierAndName, 
@@ -485,7 +580,7 @@ plot_perCorridor = function(valuesPerCorridor, summaryPerCorridor, outliers,
                                   by = "ID")
   # Merge values per corridor with corridor names
   valuesPerCorridor_name <- merge(valuesPerCorridor_sign, 
-                                  corridorName, 
+                                  corridorNameDF, 
                                   by = "ID")
   
   # Color match for current density significance
@@ -526,23 +621,27 @@ BLBR_perCorridorPlot <- plot_perCorridor(
   valuesPerCorridor = BLBR_valuesPerCorridor,
   summaryPerCorridor = BLBR_summaryPerCorridor,
   outliers = BLBR_outlierAndName)
+#plot(BLBR_perCorridorPlot)
 MAAM_perCorridorPlot <- plot_perCorridor(
   valuesPerCorridor = MAAM_valuesPerCorridor,
   summaryPerCorridor = MAAM_summaryPerCorridor,
   outliers = MAAM_outlierAndName)
+#plot(MAAM_perCorridorPlot)
 PLCI_perCorridorPlot <- plot_perCorridor(
   valuesPerCorridor = PLCI_valuesPerCorridor,
   summaryPerCorridor = PLCI_summaryPerCorridor,
   outliers = PLCI_outlierAndName)
+#plot(PLCI_perCorridorPlot)
 RASY_perCorridorPlot <- plot_perCorridor(
   valuesPerCorridor = RASY_valuesPerCorridor,
   summaryPerCorridor = RASY_summaryPerCorridor,
   outliers = RASY_outlierAndName)
+#plot(RASY_perCorridorPlot)
 URAM_perCorridorPlot <- plot_perCorridor(
   valuesPerCorridor = URAM_valuesPerCorridor,
   summaryPerCorridor = URAM_summaryPerCorridor,
   outliers = URAM_outlierAndName)
-
+#plot(URAM_perCorridorPlot)
 
 
 # Single plot current density per corridor across species ----------------------
@@ -566,23 +665,18 @@ merge_valuesAndName = function(valuesPerCorridor, summaryPerCorridor,
 BLBR_valuesAndName <- merge_valuesAndName(
   valuesPerCorridor = BLBR_valuesPerCorridor,
   summaryPerCorridor = BLBR_summaryPerCorridor)
-BLBR_valuesAndName$Species <- "BLBR"
 MAAM_valuesAndName <- merge_valuesAndName(
   valuesPerCorridor = MAAM_valuesPerCorridor,
   summaryPerCorridor = MAAM_summaryPerCorridor)
-MAAM_valuesAndName$Species <- "MAAM"
 PLCI_valuesAndName <- merge_valuesAndName(
   valuesPerCorridor = PLCI_valuesPerCorridor,
   summaryPerCorridor = PLCI_summaryPerCorridor)
-PLCI_valuesAndName$Species <- "PLCI"
 RASY_valuesAndName <- merge_valuesAndName(
   valuesPerCorridor = RASY_valuesPerCorridor,
   summaryPerCorridor = RASY_summaryPerCorridor)
-RASY_valuesAndName$Species <- "RASY"
 URAM_valuesAndName <- merge_valuesAndName(
   valuesPerCorridor = URAM_valuesPerCorridor,
   summaryPerCorridor = URAM_summaryPerCorridor)
-URAM_valuesAndName$Species <- "URAM"
 
 # Combine results across species
 valuesAndName <- rbind(BLBR_valuesAndName, 
@@ -592,7 +686,7 @@ valuesAndName <- rbind(BLBR_valuesAndName,
                        URAM_valuesAndName)
 
 # Function to merge summary per corridor with color dictionary and corridor name
-create_signPalette = function(summaryPerCorridor, 
+create_signPalette = function(spp_summaryPerCorridor, 
                               corridorNameDF = corridorName){
   
   # Color match for current density significance
@@ -600,7 +694,7 @@ create_signPalette = function(summaryPerCorridor,
                                 ColourCode = c("palegreen", "#F8766D", "grey"))
   
   # Merge summary per corridor with colour dictionary
-  summaryPerCorridor_color <- summaryPerCorridor %>%
+  summaryPerCorridor_color <- spp_summaryPerCorridor %>%
     merge(colorDictionary, by = "Significance") %>%
     merge(corridorNameDF, by = "ID") %>%
     arrange(AlphabeticalOrder)
@@ -627,15 +721,16 @@ signPalette <- c(BLBR_signPalette,
 # Set corridor order & levels
 corridorName <- corridorName %>%
   arrange(CorridorOrder)
-levelOrder <- corridorNameDF$Name
+levelOrder <- corridorName$Name
 
 # Plot current density per corridor with colour-coded significance 
-ggplot(valuesAndName, 
+singleCorridorsPlot <- ggplot(valuesAndName, 
        aes(x = factor(Name,  level = levelOrder), 
            y = Value)) +
-  labs(y = "Densité de courant", x = "Corridor") +
-  geom_boxplot(aes(fill = interaction(Name, Species)), 
-               outlier.color = NA, show.legend = F) + 
+  labs(y = "Flux de mouvement", x = "Corridor") +
+  geom_boxplot(aes(fill = interaction(Name, Species)),
+               outlier.color = NA, show.legend = F, 
+               lwd = 0.5) + 
   geom_point(data = outlierAndName[outlierAndName$outlier,], 
              aes(color = interaction(Name, Species)),
              alpha = 0.5, position=position_jitterdodge(jitter.width=0), 
@@ -644,3 +739,76 @@ ggplot(valuesAndName,
   scale_fill_manual(values = signPalette) +
   theme_classic() +
   theme(axis.text.x = element_text(angle = 45, hjust=1))
+#plot(singleCorridorsPlot)
+
+ggsave("singlePlot.png", 
+       plot = singleCorridorsPlot, device = "png", width = 10, height = 6, units = "in")
+
+
+
+# Plot current density across all corridors per species ------------------------
+
+# Function to detect outlier
+outlier_species <- valuesPerCorridor %>% 
+    group_by(Species) %>%
+    mutate(outlier = calculate_outliers(Value)) %>%
+    ungroup()
+
+# Color match for current density significance
+colorDictionary <- data.frame(Significance = c("+", "-", NA),
+                              ColourCode = c("palegreen", "#F8766D", "grey"))
+
+# Merge summary per corridor with colour dictionary
+summaryPerSpecies_color <- summaryPerSpecies %>%
+  merge(colorDictionary, by = "Significance")
+
+# Set palette following alphabetical order
+significancePalette <- summaryPerSpecies_color$ColourCode
+
+# Plot current density per corridor with colour-coded significance 
+perSpeciesPlot <- ggplot(valuesPerCorridor, 
+       aes(x = factor(Species), 
+           y = Value)) +
+  labs(y = "Flux de mouvement", x = "Espèces") +
+  geom_boxplot(aes(fill = Species),
+               outlier.color = NA, show.legend = T, 
+               lwd = 0.5) + 
+  geom_point(data = outlier_species[outlier_species$outlier,], 
+             aes(color = Species),
+             alpha = 0.5, position=position_jitterdodge(jitter.width=0), 
+             show.legend = F) +
+  scale_colour_manual(values = significancePalette) +
+  scale_fill_manual(values = significancePalette) +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, hjust=1))
+#plot(perSpeciesPlot)
+
+ggsave("perSpeciesPlot.png", 
+       plot = perSpeciesPlot, device = "png", 
+       width = 6, height = 6, units = "in")
+
+
+
+
+# Write to file ----------------------------------------------------------------
+
+st_write(obj = minConvexPolygon_merged, # Remove area attribute
+         dsn = file.path(intermediatesDir, "Boundaries"),
+         layer = "minConvexPolygon",
+         factorsAsCharacter = FALSE,
+         overwrite = TRUE,
+         driver = "ESRI Shapefile")
+
+
+writeRaster(BLBRcurrent_nonCCNmask, 
+            file.path(intermediatesDir, "Resistance", 
+                      "BLBRcurrent_nonCCNmask.tif"), 
+            overwrite = TRUE, datatype = "FLT8S", NAflag = -9999)
+
+BLBRcurrent_singleCCNmask <- mask(BLBRcurrent_ext, 
+                                  CCNcorridors_continuous, inverse = FALSE)
+writeRaster(BLBRcurrent_singleCCNmask, 
+            file.path(intermediatesDir, "Resistance", 
+                      "BLBRcurrent_singleCCNmask.tif"), 
+            overwrite = TRUE, datatype = "FLT8S", NAflag = -9999)
+
