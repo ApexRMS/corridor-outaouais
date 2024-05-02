@@ -132,6 +132,11 @@ st_write(obj = regionalMRC_buffered,
          driver = "ESRI Shapefile")
 
 # Local analysis area
+# Raster
+writeRaster(localArea, 
+            file.path(intermediatesDir, "Boundaries", "localArea.tif"), 
+            overwrite = TRUE, datatype = "INT2S", NAflag = -9999)
+# Shapefile
 st_write(obj = localMRC_buffered,
          dsn = file.path(intermediatesDir, "Boundaries"),
          layer = "localStudyArea",
