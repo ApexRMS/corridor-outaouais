@@ -302,9 +302,9 @@ for(i in 1:length(speciesList)){
   ###########################################
   # Save outputs as geotiff for full region #
   ###########################################
-  execGRASS('r.out.gdal', input=paste0(species, '_habitatSuitability'), output=paste0(intermediatesDir, "/", species, '_habitatSuitability_', '30', 'm_update.tif'), format='GTiff',createopt='COMPRESS=LZW', flags=c('overwrite'))
-  execGRASS('r.out.gdal', input=paste0(species, '_habitatLargeBinary'), output=paste0(intermediatesDir, "/", species, '_habitatPatch_', '30', 'm_update.tif'), format='GTiff',createopt='COMPRESS=LZW', flags=c('overwrite'))
-  execGRASS('r.out.gdal', input=paste0(species, '_resistance'), output=paste0(intermediatesDir, "/", species, '_resistance_', '30', 'm_update.tif'), format='GTiff', createopt='COMPRESS=LZW', flags=c('overwrite'))
+  execGRASS('r.out.gdal', input=paste0(species, '_habitatSuitability'), output=paste0(intermediatesDir, "/", species, '_habitatSuitability_', '30', 'm.tif'), format='GTiff',createopt='COMPRESS=LZW', flags=c('overwrite'))
+  execGRASS('r.out.gdal', input=paste0(species, '_habitatLargeBinary'), output=paste0(intermediatesDir, "/", species, '_habitatPatch_', '30', 'm.tif'), format='GTiff',createopt='COMPRESS=LZW', flags=c('overwrite'))
+  execGRASS('r.out.gdal', input=paste0(species, '_resistance'), output=paste0(intermediatesDir, "/", species, '_resistance_', '30', 'm.tif'), format='GTiff', createopt='COMPRESS=LZW', flags=c('overwrite'))
   
   ################################################################################
   # Save habitat patch and resistance map at coarser resolutions for full region #
