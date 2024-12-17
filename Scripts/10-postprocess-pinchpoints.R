@@ -42,29 +42,39 @@ URAMlocal_appendix <- rast(file.path(outputDir, "Final",
                                      "localURAM_corridors_noNCC_masked.tif"))
 
 # Regional corridors
-BLBRregional_corridors <- rast(file.path(outputDir, "Final",
+BLBRregional_corridors <- rast(file.path(outputDir, "Final", 
+                                         "2024-11 regional sources update",
                                          "regionalBLBR_corridors.tif"))
-MAAMregional_corridors <- rast(file.path(outputDir, "Final",
-                                         "regionalMAAM_corridors.tif"))
-PLCIregional_corridors <- rast(file.path(outputDir, "Final",
+MAAMregional_corridors <- rast(file.path(outputDir, "Final", 
+                                         "2024-11 regional sources update",
+                                         "MAAM_corridors_truncated_.tif"))
+PLCIregional_corridors <- rast(file.path(outputDir, "Final", 
+                                         "2024-11 regional sources update",
                                          "regionalPLCI_corridors.tif"))
-RASYregional_corridors <- rast(file.path(outputDir, "Final",
+RASYregional_corridors <- rast(file.path(outputDir, "Final", 
+                                         "2024-11 regional sources update",
                                          "regionalRASY_corridors.tif"))
-URAMregional_corridors <- rast(file.path(outputDir, "Final",
+URAMregional_corridors <- rast(file.path(outputDir, "Final", 
+                                         "2024-11 regional sources update",
                                          "regionalURAM_corridors.tif"))
 
 # Pinchpoints
 # Regional
-BLBRregional_pinchpoints <- rast(file.path(outputDir, "Final",
+BLBRregional_pinchpoints <- rast(file.path(outputDir, "Final", 
+                                         "2024-11 regional sources update",
                                            "regionalBLBR_pinchpoints.tif"))
-MAAMregional_pinchpoints <- rast(file.path(outputDir, "Final",
-                                           "regionalMAAM_pinchpoints.tif"))
-PLCIregional_pinchpoints <- rast(file.path(outputDir, "Final",
-                                           "regionalPLCI_pinchpoints.tif"))
-RASYregional_pinchpoints <- rast(file.path(outputDir, "Final",
+MAAMregional_pinchpoints <- rast(file.path(outputDir, "Final", 
+                                          "2024-11 regional sources update",
+                                          "MAAM_current_adjacentPair.tif"))
+PLCIregional_pinchpoints <- rast(file.path(outputDir, "Final", 
+                                          "2024-11 regional sources update",
+                                          "regionalPLCI_pinchpoints.tif"))
+RASYregional_pinchpoints <- rast(file.path(outputDir, "Final", 
+                                         "2024-11 regional sources update",
                                            "regionalRASY_pinchpoints.tif"))
-URAMregional_pinchpoints <- rast(file.path(outputDir, "Final",
-                                           "regionalURAM_pinchpoints.tif"))
+URAMregional_pinchpoints <- rast(file.path(outputDir, "Final", 
+                                          "2024-11 regional sources update",
+                                          "regionalURAM_pinchpoints.tif"))
 # Local
 BLBRlocal_pinchpoints <- rast(file.path(outputDir, "Final",
                                         "localBLBR_pinchpoints_appendix.tif"))
@@ -170,22 +180,27 @@ pinchpointsURAMlocal_masked <- URAMlocal_pinchpoints %>%
 # Regional
 writeRaster(pinchpointsBLBRregional_masked, 
             file.path(outputDir, "Final",
+                      "2024-11 regional sources update",
                       "regionalBLBR_pinchpoints_masked.tif"), 
             overwrite = TRUE, datatype = "FLT4S", NAflag = -9999)
-writeRaster(pinchpointsMAAMregional_masked, 
+writeRaster(pinchpointsMAAMregional_masked,
             file.path(outputDir, "Final",
+                      "2024-11 regional sources update",
                       "regionalMAAM_pinchpoints_masked.tif"), 
             overwrite = TRUE, datatype = "FLT4S", NAflag = -9999)
 writeRaster(pinchpointsPLCIregional_masked, 
             file.path(outputDir, "Final",
+                      "2024-11 regional sources update",
                       "regionalPLCI_pinchpoints_masked.tif"), 
             overwrite = TRUE, datatype = "FLT4S", NAflag = -9999)
 writeRaster(pinchpointsRASYregional_masked, 
             file.path(outputDir, "Final",
+                      "2024-11 regional sources update",
                       "regionalRASY_pinchpoints_masked.tif"), 
             overwrite = TRUE, datatype = "FLT4S", NAflag = -9999)
 writeRaster(pinchpointsURAMregional_masked, 
             file.path(outputDir, "Final",
+                      "2024-11 regional sources update",
                       "regionalURAM_pinchpoints_masked.tif"), 
             overwrite = TRUE, datatype = "FLT4S", NAflag = -9999)
 

@@ -13,7 +13,7 @@
 library(terra)
 library(sf)
 library(tidyverse)
-library(rgrass)
+#library(rgrass)
 
 
 

@@ -42,15 +42,20 @@ URAMlocal_appendix <- rast(file.path(outputDir, "Final",
                                      "localURAMnoNCC_corridors.tif"))
 
 # Regional corridors
-BLBRregional <- rast(file.path(outputDir, "Final",
+BLBRregional <- rast(file.path(outputDir, "Final", 
+                               "2024-11 regional sources update",
                                "regionalBLBR_corridors.tif"))
 MAAMregional <- rast(file.path(outputDir, "Final",
+                               "2024-11 regional sources update",
                                "regionalMAAM_corridors.tif"))
-PLCIregional <- rast(file.path(outputDir, "Final",
+PLCIregional <- rast(file.path(outputDir, "Final", 
+                               "2024-11 regional sources update",
                                "regionalPLCI_corridors.tif"))
 RASYregional <- rast(file.path(outputDir, "Final",
+                               "2024-11 regional sources update",
                                "regionalRASY_corridors.tif"))
 URAMregional <- rast(file.path(outputDir, "Final",
+                               "2024-11 regional sources update",
                                "regionalURAM_corridors.tif"))
 
 
@@ -153,6 +158,12 @@ PLCIregional_inverted[is.na(PLCIregional_inverted)] <- 0
 RASYregional_inverted[is.na(RASYregional_inverted)] <- 0
 URAMregional_inverted[is.na(URAMregional_inverted)] <- 0
 
+# Adjust raster extents
+BLBRregional_extent <- BLBRregional_inverted %>%
+  crop(PLCIregional_inverted)
+MAAMregional_extent <- MAAMregional_inverted %>%
+  crop(PLCIregional_inverted)
+
 # Sum corridors
 localSum_inverted <- sum(c(BLBRlocal_inverted,
                            MAAMlocal_inverted,
@@ -164,8 +175,8 @@ localSum_appendix_inverted <- sum(c(BLBRlocal_appendix_inverted,
                                     PLCIlocal_appendix_inverted,
                                     RASYlocal_appendix_inverted,
                                     URAMlocal_appendix_inverted))
-regionalSum_inverted <- sum(c(BLBRregional_inverted,
-                              MAAMregional_inverted,
+regionalSum_inverted <- sum(c(BLBRregional_extent,
+                              MAAMregional_extent,
                               PLCIregional_inverted,
                               RASYregional_inverted,
                               URAMregional_inverted))
@@ -230,6 +241,12 @@ URAMregional_binary <- URAMregional
 URAMregional_binary[!is.na(URAMregional_binary)] <- 1
 URAMregional_binary[is.na(URAMregional_binary)] <- 0
 
+# Adjust raster extents
+BLBRregional_binaryExtent <- BLBRregional_binary %>%
+  crop(PLCIregional_binary)
+MAAMregional_binaryExtent <- MAAMregional_binary %>%
+  crop(PLCIregional_binary)
+
 # Sum corridors
 localSum_binary <- sum(c(BLBRlocal_binary,
                          MAAMlocal_binary,
@@ -241,8 +258,8 @@ localSum_appendix_binary <- sum(c(BLBRlocal_appendix_binary,
                                   PLCIlocal_appendix_binary,
                                   RASYlocal_appendix_binary,
                                   URAMlocal_appendix_binary))
-regionalSum_binary <- sum(c(BLBRregional_binary,
-                            MAAMregional_binary,
+regionalSum_binary <- sum(c(BLBRregional_binaryExtent,
+                            MAAMregional_binaryExtent,
                             PLCIregional_binary,
                             RASYregional_binary,
                             URAMregional_binary))
@@ -332,7 +349,7 @@ writeRaster(localSum_appendix_inverted,
                       "local_sppCorridors_noNCC_continuous.tif"), 
             overwrite = TRUE, datatype = "FLT8S", NAflag = -9999)
 writeRaster(regionalSum_inverted, 
-            file.path(outputDir, "Final", 
+            file.path(outputDir, "Final", "2024-11 regional sources update",
                       "regional_sppCorridors_continuous.tif"), 
             overwrite = TRUE, datatype = "FLT8S", NAflag = -9999)
 
@@ -346,7 +363,7 @@ writeRaster(localSum_appendix_binary,
                       "local_sppCorridors_noNCC_binary.tif"), 
             overwrite = TRUE, datatype = "FLT8S", NAflag = -9999)
 writeRaster(regionalSum_binary, 
-            file.path(outputDir, "Final", 
+            file.path(outputDir, "Final", "2024-11 regional sources update",
                       "regional_sppCorridors_binary.tif"), 
             overwrite = TRUE, datatype = "FLT8S", NAflag = -9999)
 
